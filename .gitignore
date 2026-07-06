@@ -25,3 +25,6 @@
 # Dependencies / build output (unignore later if a build tool is added)
 node_modules/
 vendor/
+
+# Packaged theme zips
+*.zip
