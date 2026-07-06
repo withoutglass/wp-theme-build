@@ -1,6 +1,6 @@
 <?php
 /**
- * Main template — blog listing and ultimate fallback.
+ * Archive template — category, tag, date, author listings.
  *
  * @package sample-00
  */
@@ -9,6 +9,11 @@ get_header();
 ?>
 
 <?php if ( have_posts() ) : ?>
+	<header class="archive-header">
+		<h1 class="archive-title"><?php the_archive_title(); ?></h1>
+		<?php the_archive_description( '<div class="archive-description">', '</div>' ); ?>
+	</header>
+
 	<?php
 	while ( have_posts() ) :
 		the_post();

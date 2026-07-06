@@ -66,6 +66,29 @@ body {
   color: var(--accent);
 }
 
+.entry-meta {
+  margin: 0.25rem 0 1rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.entry-content {
+  margin-top: 1rem;
+}
+
+article {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.archive-header {
+  margin-bottom: 1rem;
+}
+
+.archive-description {
+  color: var(--muted);
+}
+
 .site-footer {
   border-top: 1px solid #eee;
   color: var(--muted);
