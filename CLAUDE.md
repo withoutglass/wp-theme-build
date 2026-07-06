@@ -10,6 +10,11 @@
 
 - 테마는 `01`, `02`, `03` … 식으로 넘버링한 폴더 단위로 만든다.
 - 각 넘버 폴더 = 하나의 독립적인 테마 시도.
+- `00` = **최소 베이스라인** 테마. 실사용에 가까운 최소 골격(zero-base 클래식 테마)이며,
+  새 테마는 특별한 사유가 없으면 이 구조에서 출발한다.
+  구성: `style.css`, `functions.php`, `header.php`, `footer.php`, `index.php`,
+  `single.php`, `page.php`, `archive.php`, `search.php`, `404.php`,
+  `template-parts/content.php`(목록 아이템 공용 파트).
 
 ## 테마 구축 방식 (테마마다 선택)
 
