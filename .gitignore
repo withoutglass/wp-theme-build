@@ -28,3 +28,4 @@ vendor/
 
 # Packaged theme zips
 *.zip
+.wp-local/
