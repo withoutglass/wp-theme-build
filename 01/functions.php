@@ -52,6 +52,7 @@ function sample01_channel_defaults() {
 	return array(
 		'youtube_url'   => 'https://www.youtube.com/',
 		'yt_channel_id' => 'UC_x5XG1OV2P6uZZ5FSM9Ttw', // 데모용 Google Developers 채널
+		'yt_api_key'    => '',
 		'instagram_url' => '#',
 		'x_url'         => '#',
 		'contact_email' => 'team@fastviewkorea.com',
@@ -90,9 +91,13 @@ function sample01_channel_settings_init() {
 add_action( 'admin_init', 'sample01_channel_settings_init' );
 
 function sample01_channel_sanitize( $input ) {
+	// 설정 저장 시 최근 영상 캐시 비우기 (채널/키 변경 즉시 반영).
+	delete_transient( 'sample01_yt_videos' );
+
 	return array(
 		'youtube_url'   => esc_url_raw( $input['youtube_url'] ?? '' ),
 		'yt_channel_id' => sanitize_text_field( $input['yt_channel_id'] ?? '' ),
+		'yt_api_key'    => sanitize_text_field( $input['yt_api_key'] ?? '' ),
 		'instagram_url' => esc_url_raw( $input['instagram_url'] ?? '' ),
 		'x_url'         => esc_url_raw( $input['x_url'] ?? '' ),
 		'contact_email' => sanitize_email( $input['contact_email'] ?? '' ),
@@ -103,6 +108,7 @@ function sample01_channel_settings_page() {
 	$fields = array(
 		'youtube_url'   => array( '유튜브 채널 URL', '구독하기 버튼과 헤더 "유튜브 바로가기"에 사용됩니다.' ),
 		'yt_channel_id' => array( '유튜브 채널 ID', '"최근 업로드 영상" 위젯에 사용됩니다. UC로 시작하는 ID (유튜브 채널 > 정보 > 공유에서 확인).' ),
+		'yt_api_key'    => array( 'YouTube API 키 (선택)', '비워두면 채널 RSS로 최근 영상을 가져옵니다(권장 기본값). RSS가 안 되는 환경에서만 YouTube Data API v3 키를 발급해 입력하세요.' ),
 		'instagram_url' => array( '인스타그램 URL', '비워두면 버튼이 표시되지 않습니다.' ),
 		'x_url'         => array( 'X(트위터) URL', '비워두면 버튼이 표시되지 않습니다.' ),
 		'contact_email' => array( '문의 이메일', '헤더 "문의하기"와 메일 문의 버튼에 사용됩니다.' ),
@@ -203,11 +209,16 @@ function sample01_backfill_thumbs_handler() {
 }
 add_action( 'admin_post_sample01_backfill_thumbs', 'sample01_backfill_thumbs_handler' );
 
-// 채널 RSS(키 불필요)에서 최근 영상 목록을 가져온다. 12시간 캐시.
+// 채널 최근 영상 목록. API 키가 있으면 Data API v3, 없으면 RSS 폴백. 12시간 캐시.
 function sample01_recent_videos( $count = 4 ) {
 	$channel_id = sample01_channel_option( 'yt_channel_id' );
 	if ( ! $channel_id ) {
 		return array();
+	}
+
+	$api_key = sample01_channel_option( 'yt_api_key' );
+	if ( $api_key ) {
+		return sample01_recent_videos_api( $channel_id, $api_key, $count );
 	}
 
 	add_filter( 'wp_feed_cache_transient_lifetime', 'sample01_feed_cache_lifetime' );
@@ -236,6 +247,59 @@ function sample01_recent_videos( $count = 4 ) {
 
 function sample01_feed_cache_lifetime() {
 	return 12 * HOUR_IN_SECONDS;
+}
+
+// 유튜브 피드 요청은 IPv4 강제 — 일부 네트워크에서 IPv6 경로의 구글 엣지가 404/500을 내는 문제 회피.
+function sample01_force_ipv4_for_youtube( $handle, $parsed_args, $url ) {
+	if ( false !== strpos( (string) $url, 'youtube.com/feeds' ) && defined( 'CURL_IPRESOLVE_V4' ) ) {
+		curl_setopt( $handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+	}
+}
+add_action( 'http_api_curl', 'sample01_force_ipv4_for_youtube', 10, 3 );
+
+// Data API v3: 채널 업로드 재생목록(UU + 채널ID 뒷부분)에서 최근 영상 조회.
+function sample01_recent_videos_api( $channel_id, $api_key, $count ) {
+	$cached = get_transient( 'sample01_yt_videos' );
+	if ( false !== $cached ) {
+		return array_slice( $cached, 0, $count );
+	}
+
+	$response = wp_remote_get(
+		add_query_arg(
+			array(
+				'part'       => 'snippet',
+				'playlistId' => 'UU' . substr( $channel_id, 2 ),
+				'maxResults' => 10,
+				'key'        => $api_key,
+			),
+			'https://www.googleapis.com/youtube/v3/playlistItems'
+		),
+		array( 'timeout' => 10 )
+	);
+
+	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+		// 실패도 1시간 캐시해 방문마다 재호출하지 않는다.
+		set_transient( 'sample01_yt_videos', array(), HOUR_IN_SECONDS );
+		return array();
+	}
+
+	$data   = json_decode( wp_remote_retrieve_body( $response ), true );
+	$videos = array();
+	foreach ( (array) ( $data['items'] ?? array() ) as $item ) {
+		$snippet  = $item['snippet'] ?? array();
+		$video_id = $snippet['resourceId']['videoId'] ?? '';
+		if ( ! $video_id ) {
+			continue;
+		}
+		$videos[] = array(
+			'title' => $snippet['title'] ?? '',
+			'url'   => 'https://www.youtube.com/watch?v=' . $video_id,
+			'thumb' => $snippet['thumbnails']['medium']['url'] ?? 'https://i.ytimg.com/vi/' . $video_id . '/mqdefault.jpg',
+		);
+	}
+
+	set_transient( 'sample01_yt_videos', $videos, 12 * HOUR_IN_SECONDS );
+	return array_slice( $videos, 0, $count );
 }
 
 // 대표 이미지가 없으면 본문 첫 번째 이미지를 대표 이미지로 자동 등록.
