@@ -22,8 +22,8 @@ while ( have_posts() ) :
 						<?php bloginfo( 'name' ); ?> · <?php echo esc_html( get_the_date( 'Y.m.d H:i' ) ); ?>
 					</p>
 					<?php
-					// 글별 원본 영상 URL이 없으면 채널 URL로 폴백 (연동 전까지 버튼 상시 노출).
-					$original_video = get_post_meta( get_the_ID(), 'original_video_url', true );
+					// 글별 원본 영상 URL(백엔드가 meta로 전달)이 없으면 채널 URL로 폴백.
+					$original_video = get_post_meta( get_the_ID(), 'source_video_url', true );
 					if ( ! $original_video ) {
 						$original_video = sample01_channel_option( 'youtube_url' );
 					}

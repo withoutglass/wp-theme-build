@@ -24,6 +24,22 @@ function sample01_setup() {
 }
 add_action( 'after_setup_theme', 'sample01_setup' );
 
+// 원본 영상 URL 메타. 발행 파이프라인(백엔드)이 REST API의 meta 필드로 보내므로
+// show_in_rest 등록이 없으면 저장 단계에서 조용히 버려진다. 키명은 백엔드와 합의한 값.
+function sample01_register_meta() {
+	register_post_meta(
+		'post',
+		'source_video_url',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'esc_url_raw',
+		)
+	);
+}
+add_action( 'init', 'sample01_register_meta' );
+
 function sample01_enqueue() {
 	wp_enqueue_style(
 		'sample-01-style',
