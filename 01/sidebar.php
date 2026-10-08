@@ -29,7 +29,8 @@ $top = new WP_Query(
 							<p class="entry-meta"><?php echo esc_html( get_the_date( 'Y.m.d' ) ); ?></p>
 						</div>
 						<?php if ( has_post_thumbnail() ) : ?>
-							<a href="<?php the_permalink(); ?>" class="top-thumb"><?php the_post_thumbnail( 'thumbnail' ); ?></a>
+							<a href="<?php the_permalink(); ?>" class="top-thumb"<?php sample01_thumb_style_attr(); ?>><?php // 'thumbnail'은 150×150 강제 크롭 파일이라 contain이어도 잘려 보임 — 크롭 없는 medium 사용. ?>
+							<?php the_post_thumbnail( 'medium' ); ?></a>
 						<?php endif; ?>
 					</li>
 				<?php endwhile; ?>

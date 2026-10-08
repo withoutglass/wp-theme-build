@@ -50,6 +50,32 @@ function sample01_enqueue() {
 }
 add_action( 'wp_enqueue_scripts', 'sample01_enqueue' );
 
+// 홈 /page/N 404 방지: 404 판정은 메인 쿼리 기준인데 front-page의 최신 기사는
+// 커스텀 쿼리(5개/페이지)라 페이지 수가 어긋난다. 메인 쿼리도 5개로 맞춘다.
+function sample01_home_pagination( $query ) {
+	if ( ! is_admin() && $query->is_main_query() && $query->is_home() ) {
+		$query->set( 'posts_per_page', 5 );
+	}
+}
+add_action( 'pre_get_posts', 'sample01_home_pagination' );
+
+// 유튜브 URL(watch/youtu.be/shorts/embed)에서 임베드 URL 생성. 유튜브가 아니면 빈 문자열.
+function sample01_youtube_embed_url( $url ) {
+	if ( ! $url || ! preg_match( '~(?:youtube\.com/(?:watch\?v=|shorts/|embed/)|youtu\.be/)([\w-]{6,})~', $url, $m ) ) {
+		return '';
+	}
+	return 'https://www.youtube.com/embed/' . $m[1];
+}
+
+// 썸네일 박스용 블러 배경: 세로형(쇼츠) 썸네일도 잘림 없이 박스를 채우도록
+// 같은 이미지를 CSS 변수로 전달한다 (style.css의 ::before 블러 레이어가 사용).
+function sample01_thumb_style_attr() {
+	$url = get_the_post_thumbnail_url( null, 'medium' );
+	if ( $url ) {
+		echo ' style="--thumb:url(\'' . esc_url( $url ) . '\')"';
+	}
+}
+
 // 목록 요약문: 본문에서 자동 추출, 30단어 + 말줄임.
 function sample01_excerpt_length( $length ) {
 	return 30;
@@ -61,6 +87,33 @@ function sample01_excerpt_more( $more ) {
 }
 add_filter( 'excerpt_more', 'sample01_excerpt_more' );
 
+// ---------- MSN 공급 피드 (/feed/ms) ----------
+
+function sample01_register_ms_feed() {
+	add_feed( 'ms', 'sample01_render_ms_feed' );
+}
+add_action( 'init', 'sample01_register_ms_feed' );
+
+function sample01_render_ms_feed() {
+	get_template_part( 'rss', 'ms' );
+}
+
+// add_feed는 리라이트 규칙이라 테마 활성화 시 flush해야 /feed/ms URL이 열린다.
+function sample01_flush_rewrites() {
+	sample01_register_ms_feed();
+	flush_rewrite_rules();
+}
+add_action( 'after_switch_theme', 'sample01_flush_rewrites' );
+
+// ms 피드 수정모드 지원: 최초 저장 시의 수정시간을 postmeta에 보관.
+function sample01_save_initial_modified_time( $post_id ) {
+	if ( get_post_meta( $post_id, '_initial_modified_time', true ) == '' ) {
+		$modified_time = get_post_modified_time( 'Y-m-d H:i:s', true, $post_id );
+		update_post_meta( $post_id, '_initial_modified_time', $modified_time );
+	}
+}
+add_action( 'save_post', 'sample01_save_initial_modified_time' );
+
 // ---------- 채널 설정 (어드민 > 채널 설정에서 일괄 관리) ----------
 
 // 미저장(데모) 상태의 기본값. 저장 후에는 입력된 값만 사용되며 빈 항목의 버튼은 숨겨진다.
@@ -71,7 +124,9 @@ function sample01_channel_defaults() {
 		'yt_api_key'    => '',
 		'instagram_url' => '#',
 		'x_url'         => '#',
+		'tiktok_url'    => '#',
 		'contact_email' => 'team@fastviewkorea.com',
+		'head_scripts'  => '',
 	);
 }
 
@@ -116,9 +171,21 @@ function sample01_channel_sanitize( $input ) {
 		'yt_api_key'    => sanitize_text_field( $input['yt_api_key'] ?? '' ),
 		'instagram_url' => esc_url_raw( $input['instagram_url'] ?? '' ),
 		'x_url'         => esc_url_raw( $input['x_url'] ?? '' ),
+		'tiktok_url'    => esc_url_raw( $input['tiktok_url'] ?? '' ),
 		'contact_email' => sanitize_email( $input['contact_email'] ?? '' ),
+		// 헤더 스크립트는 GA/애드센스 코드 원문이 필요하므로 unfiltered_html 권한자에 한해 그대로 저장.
+		'head_scripts'  => current_user_can( 'unfiltered_html' ) ? trim( (string) ( $input['head_scripts'] ?? '' ) ) : sample01_channel_option( 'head_scripts' ),
 	);
 }
+
+// 채널 설정의 헤더 스크립트를 <head>에 출력 (GA, 애드센스 등).
+function sample01_output_head_scripts() {
+	$scripts = sample01_channel_option( 'head_scripts' );
+	if ( $scripts ) {
+		echo "\n" . $scripts . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- 관리자가 입력한 스크립트 원문.
+	}
+}
+add_action( 'wp_head', 'sample01_output_head_scripts', 20 );
 
 function sample01_channel_settings_page() {
 	$fields = array(
@@ -127,7 +194,9 @@ function sample01_channel_settings_page() {
 		'yt_api_key'    => array( 'YouTube API 키 (선택)', '비워두면 채널 RSS로 최근 영상을 가져옵니다(권장 기본값). RSS가 안 되는 환경에서만 YouTube Data API v3 키를 발급해 입력하세요.' ),
 		'instagram_url' => array( '인스타그램 URL', '비워두면 버튼이 표시되지 않습니다.' ),
 		'x_url'         => array( 'X(트위터) URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'tiktok_url'    => array( '틱톡 URL', '비워두면 버튼이 표시되지 않습니다.' ),
 		'contact_email' => array( '문의 이메일', '헤더 "문의하기"와 메일 문의 버튼에 사용됩니다.' ),
+		'head_scripts'  => array( '헤더 스크립트', '모든 페이지의 <head>에 그대로 출력됩니다. Google 애널리틱스, 애드센스 코드 등을 <script> 태그째 붙여넣으세요.' ),
 	);
 	?>
 	<div class="wrap">
@@ -142,9 +211,14 @@ function sample01_channel_settings_page() {
 					<tr>
 						<th scope="row"><label for="sample01-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label[0] ); ?></label></th>
 						<td>
-							<input type="text" class="regular-text" id="sample01-<?php echo esc_attr( $key ); ?>"
-								name="sample01_channel_options[<?php echo esc_attr( $key ); ?>]"
-								value="<?php echo esc_attr( sample01_channel_option( $key ) ); ?>">
+							<?php if ( 'head_scripts' === $key ) : ?>
+								<textarea class="large-text code" rows="8" id="sample01-<?php echo esc_attr( $key ); ?>"
+									name="sample01_channel_options[<?php echo esc_attr( $key ); ?>]"><?php echo esc_textarea( sample01_channel_option( $key ) ); ?></textarea>
+							<?php else : ?>
+								<input type="text" class="regular-text" id="sample01-<?php echo esc_attr( $key ); ?>"
+									name="sample01_channel_options[<?php echo esc_attr( $key ); ?>]"
+									value="<?php echo esc_attr( sample01_channel_option( $key ) ); ?>">
+							<?php endif; ?>
 							<p class="description"><?php echo esc_html( $label[1] ); ?></p>
 						</td>
 					</tr>

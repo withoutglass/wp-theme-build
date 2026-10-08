@@ -51,7 +51,7 @@ $weekly_ids = wp_list_pluck( $weekly->posts, 'ID' );
 				?>
 				<article class="weekly-card">
 					<a href="<?php the_permalink(); ?>">
-						<div class="card-thumb">
+						<div class="card-thumb"<?php sample01_thumb_style_attr(); ?>>
 							<span class="rank-badge"><?php echo esc_html( $rank ); ?></span>
 							<?php if ( has_post_thumbnail() ) : ?>
 								<?php the_post_thumbnail( 'medium_large' ); ?>

@@ -3,7 +3,7 @@ Theme Name: Sample 01
 Theme URI: https://github.com/withoutglass/wp-theme-build
 Author: withoutglass
 Description: 유튜브→article 서비스용 뉴스형 테마. MSN 피드 공급 + 광고 수익형 사이트.
-Version: 0.3.2
+Version: 0.4.4
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
@@ -238,11 +238,11 @@ body.page .site-content article {
   background: #f2f2f2;
 }
 
+/* object-fit은 파일 하단 "썸네일 블러 배경" 블록에서 contain으로 일괄 지정 */
 .card-thumb img,
 .thumb-placeholder {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 .thumb-placeholder { background: #e9e9e9; }
@@ -301,13 +301,16 @@ body.page .site-content article {
 .list-thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 .list-body .entry-title {
   margin: 0;
   font-size: 1.0625rem;
   line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .entry-title a {
@@ -453,7 +456,6 @@ body.single .site-sidebar {
 .top-thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 /* ---------- Sidebar: 최근 업로드 영상 ---------- */
@@ -615,6 +617,22 @@ body.single .site-sidebar {
   letter-spacing: 0.05em;
 }
 
+/* 본문 끝 원본 영상 임베드 */
+.video-embed {
+  aspect-ratio: 16 / 9;
+  margin-top: 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
 .channel-box {
   display: flex;
   align-items: center;
@@ -679,6 +697,8 @@ body.single .site-sidebar {
 
 .btn-x { background: #000; }
 
+.btn-tiktok { background: #161823; }
+
 .btn-mail { background: #64748b; }
 
 .related-grid { grid-template-columns: repeat(3, 1fr); }
@@ -695,11 +715,44 @@ body.search article {
 
 .archive-description { color: var(--muted); }
 
+/* ---------- 썸네일 블러 배경 ----------
+   세로형(쇼츠) 썸네일도 잘리지 않게 contain으로 올리고,
+   빈 공간은 같은 이미지(--thumb, 템플릿에서 주입)를 블러로 깔아 채운다. */
+
+.card-thumb,
+.list-thumb,
+.top-thumb {
+  position: relative;
+}
+
+.card-thumb::before,
+.list-thumb::before,
+.top-thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--thumb);
+  background-size: cover;
+  background-position: center;
+  filter: blur(14px);
+  transform: scale(1.15);
+}
+
+.card-thumb img,
+.list-thumb img,
+.top-thumb img {
+  position: relative;
+  object-fit: contain;
+}
+
 /* ---------- Mobile ---------- */
 
 @media (max-width: 800px) {
   .weekly-grid,
   .related-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* 모바일: 최신 기사 제목은 2줄까지 */
+  .list-body .entry-title { -webkit-line-clamp: 2; }
 
   /* 좁은 화면에서는 프로필 버튼을 흐름 안으로 (소개문 아래) */
   .channel-profile { flex-wrap: wrap; }

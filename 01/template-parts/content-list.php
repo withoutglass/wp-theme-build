@@ -7,7 +7,7 @@
 ?>
 <article <?php post_class( 'list-item' ); ?>>
 	<?php if ( has_post_thumbnail() ) : ?>
-		<a href="<?php the_permalink(); ?>" class="list-thumb"><?php the_post_thumbnail( 'medium' ); ?></a>
+		<a href="<?php the_permalink(); ?>" class="list-thumb"<?php sample01_thumb_style_attr(); ?>><?php the_post_thumbnail( 'medium' ); ?></a>
 	<?php else : ?>
 		<a href="<?php the_permalink(); ?>" class="list-thumb"><div class="thumb-placeholder"></div></a>
 	<?php endif; ?>

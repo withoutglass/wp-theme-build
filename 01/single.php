@@ -41,6 +41,21 @@ while ( have_posts() ) :
 				<?php the_content(); ?>
 			</div>
 
+			<?php
+			// 본문 끝 원본 영상 임베드: 글별 source_video_url이 유튜브 영상일 때만.
+			// (상단 "원본 영상 보기" 버튼과 별개로 둘 다 노출한다.)
+			$embed_url = sample01_youtube_embed_url( get_post_meta( get_the_ID(), 'source_video_url', true ) );
+			?>
+			<?php if ( $embed_url ) : ?>
+				<div class="video-embed">
+					<iframe src="<?php echo esc_url( $embed_url ); ?>"
+						title="<?php esc_attr_e( '원본 영상', 'sample-01' ); ?>"
+						loading="lazy"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe>
+				</div>
+			<?php endif; ?>
+
 			<section class="channel-box">
 				<div class="channel-avatar">
 					<?php if ( has_custom_logo() ) : ?>
@@ -75,7 +90,7 @@ while ( have_posts() ) :
 							?>
 							<article class="weekly-card">
 								<a href="<?php the_permalink(); ?>">
-									<div class="card-thumb">
+									<div class="card-thumb"<?php sample01_thumb_style_attr(); ?>>
 										<?php if ( has_post_thumbnail() ) : ?>
 											<?php the_post_thumbnail( 'medium' ); ?>
 										<?php else : ?>

@@ -19,6 +19,10 @@
 		<ul class="footer-links">
 			<li><a href="<?php echo esc_url( home_url( '/terms/' ) ); ?>"><?php esc_html_e( '이용약관', 'sample-01' ); ?></a></li>
 			<li><a href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>"><?php esc_html_e( '개인정보처리방침', 'sample-01' ); ?></a></li>
+			<?php $footer_email = sample01_channel_option( 'contact_email' ); ?>
+			<?php if ( $footer_email ) : ?>
+				<li><a href="mailto:<?php echo esc_attr( $footer_email ); ?>"><?php esc_html_e( '문의하기', 'sample-01' ); ?></a></li>
+			<?php endif; ?>
 		</ul>
 
 		<p class="footer-info">
