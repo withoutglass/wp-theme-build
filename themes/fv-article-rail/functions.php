@@ -77,17 +77,46 @@ function fvarticle_rail_sanitize_palette( $value ) {
 	return isset( $palettes[ $value ] ) ? $value : fvarticle_rail_default_palette();
 }
 
-// 기본이 아닌 팔레트를 고르면 같은 CSS 변수를 :root에 덮어쓴다.
-function fvarticle_rail_palette_css() {
-	$key = fvarticle_rail_sanitize_palette( get_theme_mod( 'color_palette' ) );
-	if ( fvarticle_rail_default_palette() === $key ) {
-		return '';
-	}
+// 색 모드: light = 라이트만, dark = 다크만, auto = 방문자 OS 설정(prefers-color-scheme)을 따른다.
+function fvarticle_rail_color_modes() {
+	return array(
+		'light' => '라이트',
+		'dark'  => '다크',
+		'auto'  => 'OS 설정 따르기 (기기가 다크 모드면 다크)',
+	);
+}
+
+function fvarticle_rail_sanitize_color_mode( $value ) {
+	return array_key_exists( $value, fvarticle_rail_color_modes() ) ? $value : 'light';
+}
+
+function fvarticle_rail_css_vars( $colors ) {
 	$css = '';
-	foreach ( fvarticle_rail_palettes()[ $key ]['colors'] as $name => $value ) {
+	foreach ( $colors as $name => $value ) {
 		$css .= '--' . $name . ':' . $value . ';';
 	}
-	return ':root{' . $css . '}';
+	return $css;
+}
+
+// style.css :root는 기본 팔레트의 라이트 값. 다른 팔레트면 라이트 값을 덮어쓰고,
+// 다크/OS 모드면 같은 변수를 다크 값으로 덮어쓴다 (OS 모드는 미디어 쿼리 안에서만).
+function fvarticle_rail_palette_css() {
+	$key     = fvarticle_rail_sanitize_palette( get_theme_mod( 'color_palette' ) );
+	$mode    = fvarticle_rail_sanitize_color_mode( get_theme_mod( 'color_mode' ) );
+	$palette = fvarticle_rail_palettes()[ $key ];
+	$css     = '';
+
+	if ( fvarticle_rail_default_palette() !== $key ) {
+		$css .= ':root{' . fvarticle_rail_css_vars( $palette['colors'] ) . '}';
+	}
+
+	$dark = ':root{' . fvarticle_rail_css_vars( $palette['dark'] ) . 'color-scheme:dark;}';
+	if ( 'dark' === $mode ) {
+		$css .= $dark;
+	} elseif ( 'auto' === $mode ) {
+		$css .= '@media (prefers-color-scheme: dark){' . $dark . '}';
+	}
+	return $css;
 }
 
 function fvarticle_rail_customize_register( $wp_customize ) {
@@ -99,6 +128,23 @@ function fvarticle_rail_customize_register( $wp_customize ) {
 			'title'       => '색상 팔레트',
 			'description' => '채널 분위기에 맞는 색 조합을 고르세요. 모든 조합은 글자 대비 기준(WCAG AA)을 통과한 값입니다.',
 			'priority'    => 30,
+		)
+	);
+	$wp_customize->add_setting(
+		'color_mode',
+		array(
+			'default'           => 'light',
+			'sanitize_callback' => 'fvarticle_rail_sanitize_color_mode',
+		)
+	);
+	$wp_customize->add_control(
+		'color_mode',
+		array(
+			'type'        => 'radio',
+			'section'     => 'fvarticle_rail_palette',
+			'label'       => '모드',
+			'description' => '다크 모드에서는 애드센스 광고(흰 바탕)가 밝게 튀어 보일 수 있습니다.',
+			'choices'     => fvarticle_rail_color_modes(),
 		)
 	);
 	$wp_customize->add_setting(

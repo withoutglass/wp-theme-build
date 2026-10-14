@@ -22,8 +22,10 @@
   - `assets/stream.js`: 자동 5편 후 "다음 기사 보기" 버튼. 화면 가운데 기사로 URL·탭 제목을 replaceState (GA4 향상된 측정의 "브라우저 기록 이벤트 기반 페이지 변경"이 페이지뷰로 집계). 자동 로딩 트리거는 스크롤 위치 체크 — IntersectionObserver는 End 키 점프 때 놓친다.
   - 본문 중간 광고는 REST 렌더링에서도 들어가야 해서 the_content 필터가 아닌 헬퍼를 템플릿에서 직접 호출. JS가 없으면 "다음 기사 보기"는 일반 링크.
 - fv-article-reader·fv-article-rail·fv-article-stream은 외모 > 사용자 정의하기 > 색상 팔레트에서 24개 팔레트 중 색 견본 카드로 선택(theme_mod `color_palette`, 기본 = 각 테마 고유색 indigo/forest/burgundy).
+  - 모드: 사용자 정의하기 > 색상 팔레트 > 모드 = 라이트(기본) / 다크 / OS 설정 따르기 (theme_mod `color_mode`). 팔레트마다 `dark` 값이 있고, 다크·OS 모드면 같은 CSS 변수를 다크 값으로 덮어쓴다(OS는 prefers-color-scheme 미디어 쿼리). 포인트색 위 글자는 `--on-accent` 변수(라이트 흰색, 다크 틀색)로 칠한다.
+  - 새 팔레트에 `dark`를 안 넣으면 빌드 스크립트가 라이트 값의 색 계열로 자동 생성해 palettes.json에 써 넣는다.
   - 원본은 `shared/palettes.json`(데이터)·`shared/palette-control.php`(견본 카드 컨트롤). 고친 뒤 `python3 tools/build-palettes.py` → 대비 검사 후 각 테마 `inc/`로 생성·복사. 테마의 `inc/` 사본은 직접 고치지 않는다.
-  - 검사 기준: 테마가 쓰는 글자/배경 조합 10가지(스크립트 PAIRS)가 모두 4.5:1 이상. 테마에 새 색 조합을 쓰면 PAIRS에도 추가할 것.
+  - 검사 기준: 테마가 쓰는 글자/배경 조합 9가지(스크립트 PAIRS)가 라이트·다크 모두 4.5:1 이상. 테마에 새 색 조합을 쓰면 PAIRS에도 추가할 것.
   - 색은 전부 style.css :root 변수로만 칠할 것 — 새 색을 하드코딩하면 팔레트 전환에서 빠진다. 팔레트를 쓰는 테마를 새로 만들면 스크립트 THEMES에 추가.
 - `fv-article-news`는 2026-10 `01`에서 이름을 바꿨다. 채널 설정 옵션 키 `sample01_channel_options`는 기존 데이터 유지를 위해 그대로 둔다.
 - `00` = **최소 베이스라인** 테마. 실사용에 가까운 최소 골격(zero-base 클래식 테마)이며,
