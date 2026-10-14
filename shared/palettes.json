@@ -1,0 +1,386 @@
+[
+ {
+  "key": "indigo",
+  "label": "미드나잇 인디고 — 남색 + 코랄",
+  "colors": {
+   "bg": "#d7d8e3",
+   "surface": "#eeeff5",
+   "chrome": "#1a1f3a",
+   "text": "#191c2e",
+   "muted": "#585d75",
+   "accent": "#b23a27",
+   "on-chrome": "#e7e8f2",
+   "chrome-muted": "#9ea3bf",
+   "accent-on-chrome": "#ff8a70",
+   "line": "#d3d5e1"
+  }
+ },
+ {
+  "key": "slate",
+  "label": "슬레이트 잉크 — 청회색 + 청록",
+  "colors": {
+   "bg": "#d5dbe1",
+   "surface": "#edf0f3",
+   "chrome": "#1c252f",
+   "text": "#1a2129",
+   "muted": "#55606c",
+   "accent": "#1f6f66",
+   "on-chrome": "#e6ebf0",
+   "chrome-muted": "#9aa6b2",
+   "accent-on-chrome": "#5fc2b4",
+   "line": "#d1d7dd"
+  }
+ },
+ {
+  "key": "graphite",
+  "label": "웜 그래파이트 — 숯색 + 호박색",
+  "colors": {
+   "bg": "#d6d1ca",
+   "surface": "#ece8e2",
+   "chrome": "#26221e",
+   "text": "#211d19",
+   "muted": "#5a534b",
+   "accent": "#8a5a0b",
+   "on-chrome": "#ede7df",
+   "chrome-muted": "#a99f94",
+   "accent-on-chrome": "#e0a93e",
+   "line": "#d2cdc6"
+  }
+ },
+ {
+  "key": "forest",
+  "label": "딥 포레스트 — 숲색 + 머스터드",
+  "colors": {
+   "bg": "#d3dbd5",
+   "surface": "#ecf0ed",
+   "chrome": "#1b2a22",
+   "text": "#16201a",
+   "muted": "#536259",
+   "accent": "#7a5a00",
+   "on-chrome": "#e4ece6",
+   "chrome-muted": "#9db0a4",
+   "accent-on-chrome": "#e8c24a",
+   "line": "#d0d9d2"
+  }
+ },
+ {
+  "key": "burgundy",
+  "label": "버건디 와인 — 와인색 + 로즈",
+  "colors": {
+   "bg": "#ddd4d7",
+   "surface": "#f2edef",
+   "chrome": "#2d1820",
+   "text": "#22151a",
+   "muted": "#67525a",
+   "accent": "#9b1f48",
+   "on-chrome": "#f0e6ea",
+   "chrome-muted": "#b79ea8",
+   "accent-on-chrome": "#f59ab5",
+   "line": "#d9d0d3"
+  }
+ },
+ {
+  "key": "teal",
+  "label": "딥 틸 & 코퍼 — 청록 + 구리색",
+  "colors": {
+   "bg": "#d0dcdc",
+   "surface": "#ebf1f1",
+   "chrome": "#0f2c30",
+   "text": "#132225",
+   "muted": "#4f6366",
+   "accent": "#a3501b",
+   "on-chrome": "#e1ecec",
+   "chrome-muted": "#93afb1",
+   "accent-on-chrome": "#f0995a",
+   "line": "#ccd8d8"
+  }
+ },
+ {
+  "key": "navy",
+  "label": "네이비 & 스카이 — 감청색 + 하늘색",
+  "colors": {
+   "bg": "#d3d7df",
+   "surface": "#eff0f3",
+   "chrome": "#152032",
+   "text": "#171b21",
+   "muted": "#545c69",
+   "accent": "#116e9c",
+   "on-chrome": "#e8ebf0",
+   "chrome-muted": "#a8b0bd",
+   "accent-on-chrome": "#51b8ec",
+   "line": "#cfd3db"
+  }
+ },
+ {
+  "key": "charcoal",
+  "label": "차콜 & 레몬 — 먹색 + 레몬",
+  "colors": {
+   "bg": "#d8d8da",
+   "surface": "#f1f1f1",
+   "chrome": "#212326",
+   "text": "#1b1c1d",
+   "muted": "#5a5b5e",
+   "accent": "#796606",
+   "on-chrome": "#ebeced",
+   "chrome-muted": "#b1b2b4",
+   "accent-on-chrome": "#f5d847",
+   "line": "#d4d4d6"
+  }
+ },
+ {
+  "key": "olive",
+  "label": "올리브 & 브릭 — 올리브 + 벽돌색",
+  "colors": {
+   "bg": "#dbddd5",
+   "surface": "#f2f2f0",
+   "chrome": "#2a2d1a",
+   "text": "#1e1f19",
+   "muted": "#5e6053",
+   "accent": "#b94427",
+   "on-chrome": "#eeefe9",
+   "chrome-muted": "#b7b9ac",
+   "accent-on-chrome": "#e79f8d",
+   "line": "#d7d9d1"
+  }
+ },
+ {
+  "key": "plum",
+  "label": "플럼 & 피치 — 자두색 + 복숭아",
+  "colors": {
+   "bg": "#ddd5dd",
+   "surface": "#f2f0f2",
+   "chrome": "#2d1a2d",
+   "text": "#1f191f",
+   "muted": "#655765",
+   "accent": "#af490e",
+   "on-chrome": "#efe9ef",
+   "chrome-muted": "#b9acb9",
+   "accent-on-chrome": "#f18b50",
+   "line": "#d9d1d9"
+  }
+ },
+ {
+  "key": "midnight",
+  "label": "미드나잇 & 골드 — 한밤 파랑 + 금색",
+  "colors": {
+   "bg": "#d1d4e0",
+   "surface": "#eff0f3",
+   "chrome": "#121935",
+   "text": "#161822",
+   "muted": "#54596e",
+   "accent": "#7f600a",
+   "on-chrome": "#e7e9f1",
+   "chrome-muted": "#a6abbf",
+   "accent-on-chrome": "#f0c54c",
+   "line": "#cdd0dc"
+  }
+ },
+ {
+  "key": "violet",
+  "label": "딥 바이올렛 & 라벤더 — 보라 + 연보라",
+  "colors": {
+   "bg": "#d8d3df",
+   "surface": "#f1eff3",
+   "chrome": "#231532",
+   "text": "#1c1721",
+   "muted": "#60566c",
+   "accent": "#5d22c3",
+   "on-chrome": "#ece8f0",
+   "chrome-muted": "#b2a8bd",
+   "accent-on-chrome": "#b393ec",
+   "line": "#d4cfdb"
+  }
+ },
+ {
+  "key": "moss",
+  "label": "모스 & 탠저린 — 이끼색 + 귤색",
+  "colors": {
+   "bg": "#d8dcd5",
+   "surface": "#f1f2f0",
+   "chrome": "#222c1c",
+   "text": "#1c1f19",
+   "muted": "#585f54",
+   "accent": "#a55109",
+   "on-chrome": "#ebeee9",
+   "chrome-muted": "#b2b8ad",
+   "accent-on-chrome": "#f59847",
+   "line": "#d4d8d1"
+  }
+ },
+ {
+  "key": "ocean",
+  "label": "오션 & 선셋 — 바다색 + 노을빛",
+  "colors": {
+   "bg": "#d1dce0",
+   "surface": "#eff2f3",
+   "chrome": "#122d35",
+   "text": "#161f22",
+   "muted": "#4d5f66",
+   "accent": "#c91d39",
+   "on-chrome": "#e7eef1",
+   "chrome-muted": "#a6b9bf",
+   "accent-on-chrome": "#f094a3",
+   "line": "#cdd8dc"
+  }
+ },
+ {
+  "key": "sepia",
+  "label": "세피아 & 버밀리언 — 고서색 + 주홍",
+  "colors": {
+   "bg": "#ddd9d5",
+   "surface": "#f2f1f0",
+   "chrome": "#2d241a",
+   "text": "#1f1c19",
+   "muted": "#635c55",
+   "accent": "#c52d16",
+   "on-chrome": "#efece9",
+   "chrome-muted": "#b9b2ac",
+   "accent-on-chrome": "#f19283",
+   "line": "#d9d5d1"
+  }
+ },
+ {
+  "key": "garnet",
+  "label": "가넷 & 앰버 — 석류석 + 호박",
+  "colors": {
+   "bg": "#dfd3d6",
+   "surface": "#f3eff0",
+   "chrome": "#32151c",
+   "text": "#21171a",
+   "muted": "#6c565b",
+   "accent": "#915a08",
+   "on-chrome": "#f0e8ea",
+   "chrome-muted": "#bda8ad",
+   "accent-on-chrome": "#f5b047",
+   "line": "#dbcfd2"
+  }
+ },
+ {
+  "key": "pine",
+  "label": "파인 & 클레이 — 소나무 + 점토색",
+  "colors": {
+   "bg": "#d4ddda",
+   "surface": "#f0f2f1",
+   "chrome": "#182f27",
+   "text": "#18201d",
+   "muted": "#51615c",
+   "accent": "#a2522f",
+   "on-chrome": "#e9efed",
+   "chrome-muted": "#aabbb5",
+   "accent-on-chrome": "#dda288",
+   "line": "#d0d9d6"
+  }
+ },
+ {
+  "key": "granite",
+  "label": "그래닛 & 일렉트릭 — 화강암 + 전기 파랑",
+  "colors": {
+   "bg": "#d7d9da",
+   "surface": "#f1f1f1",
+   "chrome": "#202427",
+   "text": "#1b1c1d",
+   "muted": "#5a5c5e",
+   "accent": "#0b50da",
+   "on-chrome": "#ebeced",
+   "chrome-muted": "#b0b2b5",
+   "accent-on-chrome": "#81a9f8",
+   "line": "#d3d5d6"
+  }
+ },
+ {
+  "key": "ink",
+  "label": "잉크 & 시안 — 먹물 파랑 + 시안",
+  "colors": {
+   "bg": "#d4d6dd",
+   "surface": "#f0f0f2",
+   "chrome": "#181e2f",
+   "text": "#181a20",
+   "muted": "#565a67",
+   "accent": "#0a707f",
+   "on-chrome": "#e9eaef",
+   "chrome-muted": "#aaaebb",
+   "accent-on-chrome": "#4cdbf0",
+   "line": "#d0d2d9"
+  }
+ },
+ {
+  "key": "damson",
+  "label": "댐슨 & 머스터드 — 짙은 자두 + 겨자",
+  "colors": {
+   "bg": "#dad5dc",
+   "surface": "#f2f0f2",
+   "chrome": "#281c2c",
+   "text": "#1d191f",
+   "muted": "#615864",
+   "accent": "#7d6212",
+   "on-chrome": "#ede9ee",
+   "chrome-muted": "#b5adb8",
+   "accent-on-chrome": "#e7c255",
+   "line": "#d6d1d8"
+  }
+ },
+ {
+  "key": "terra",
+  "label": "테라 & 세이지 — 적갈색 + 세이지",
+  "colors": {
+   "bg": "#ddd6d4",
+   "surface": "#f2f0f0",
+   "chrome": "#2f1e18",
+   "text": "#201a18",
+   "muted": "#675a56",
+   "accent": "#2d7652",
+   "on-chrome": "#efeae9",
+   "chrome-muted": "#bbaeaa",
+   "accent-on-chrome": "#72ca9e",
+   "line": "#d9d2d0"
+  }
+ },
+ {
+  "key": "emerald",
+  "label": "에메랄드 & 로즈 — 녹옥 + 장미",
+  "colors": {
+   "bg": "#d2dfda",
+   "surface": "#eff3f1",
+   "chrome": "#143426",
+   "text": "#16221d",
+   "muted": "#4e645b",
+   "accent": "#c32258",
+   "on-chrome": "#e7f1ed",
+   "chrome-muted": "#a7beb4",
+   "accent-on-chrome": "#eea0ba",
+   "line": "#cedbd6"
+  }
+ },
+ {
+  "key": "cocoa",
+  "label": "코코아 & 스카이 — 코코아 + 하늘",
+  "colors": {
+   "bg": "#dcd8d5",
+   "surface": "#f2f1f0",
+   "chrome": "#2c211c",
+   "text": "#1f1b19",
+   "muted": "#645c58",
+   "accent": "#186daa",
+   "on-chrome": "#eeebe9",
+   "chrome-muted": "#b8b1ad",
+   "accent-on-chrome": "#5eafe8",
+   "line": "#d8d4d1"
+  }
+ },
+ {
+  "key": "dusk",
+  "label": "더스크 & 민트 — 해질녘 보라 + 민트",
+  "colors": {
+   "bg": "#d7d5dc",
+   "surface": "#f0f0f2",
+   "chrome": "#1e1c2c",
+   "text": "#1a191f",
+   "muted": "#5a5864",
+   "accent": "#217358",
+   "on-chrome": "#eae9ee",
+   "chrome-muted": "#afadb8",
+   "accent-on-chrome": "#69d3b0",
+   "line": "#d3d1d8"
+  }
+ }
+]
