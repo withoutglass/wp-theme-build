@@ -47,8 +47,160 @@ function fvarticle_reader_enqueue() {
 		array(),
 		wp_get_theme()->get( 'Version' )
 	);
+
+	$palette_css = fvarticle_reader_palette_css();
+	if ( $palette_css ) {
+		wp_add_inline_style( 'fv-article-reader-style', $palette_css );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'fvarticle_reader_enqueue' );
+
+// ---------- 색상 팔레트 (외모 > 사용자 정의하기 > 색상 팔레트) ----------
+
+// 검증된 팔레트 중에서만 고른다: 테마가 쓰는 글자/배경 조합이 모두 WCAG AA(4.5:1) 이상.
+// 자유 색상 선택은 대비를 보장할 수 없어 두지 않는다. 첫 항목이 기본값이며 style.css :root 값과 같다.
+function fvarticle_reader_palettes() {
+	return array(
+		'indigo' => array(
+			'label'  => '미드나잇 인디고 — 남색 + 코랄 (기본)',
+			'colors' => array(
+				'bg'               => '#d7d8e3',
+				'surface'          => '#eeeff5',
+				'chrome'           => '#1a1f3a',
+				'text'             => '#191c2e',
+				'muted'            => '#585d75',
+				'accent'           => '#b23a27',
+				'on-chrome'        => '#e7e8f2',
+				'chrome-muted'     => '#9ea3bf',
+				'accent-on-chrome' => '#ff8a70',
+				'line'             => '#d3d5e1',
+			),
+		),
+		'slate' => array(
+			'label'  => '슬레이트 잉크 — 청회색 + 청록',
+			'colors' => array(
+				'bg'               => '#d5dbe1',
+				'surface'          => '#edf0f3',
+				'chrome'           => '#1c252f',
+				'text'             => '#1a2129',
+				'muted'            => '#55606c',
+				'accent'           => '#1f6f66',
+				'on-chrome'        => '#e6ebf0',
+				'chrome-muted'     => '#9aa6b2',
+				'accent-on-chrome' => '#5fc2b4',
+				'line'             => '#d1d7dd',
+			),
+		),
+		'graphite' => array(
+			'label'  => '웜 그래파이트 — 숯색 + 호박색',
+			'colors' => array(
+				'bg'               => '#d6d1ca',
+				'surface'          => '#ece8e2',
+				'chrome'           => '#26221e',
+				'text'             => '#211d19',
+				'muted'            => '#5a534b',
+				'accent'           => '#8a5a0b',
+				'on-chrome'        => '#ede7df',
+				'chrome-muted'     => '#a99f94',
+				'accent-on-chrome' => '#e0a93e',
+				'line'             => '#d2cdc6',
+			),
+		),
+		'forest' => array(
+			'label'  => '딥 포레스트 — 숲색 + 머스터드',
+			'colors' => array(
+				'bg'               => '#d3dbd5',
+				'surface'          => '#ecf0ed',
+				'chrome'           => '#1b2a22',
+				'text'             => '#16201a',
+				'muted'            => '#536259',
+				'accent'           => '#7a5a00',
+				'on-chrome'        => '#e4ece6',
+				'chrome-muted'     => '#9db0a4',
+				'accent-on-chrome' => '#e8c24a',
+				'line'             => '#d0d9d2',
+			),
+		),
+		'burgundy' => array(
+			'label'  => '버건디 와인 — 와인색 + 로즈',
+			'colors' => array(
+				'bg'               => '#ddd4d7',
+				'surface'          => '#f2edef',
+				'chrome'           => '#2d1820',
+				'text'             => '#22151a',
+				'muted'            => '#67525a',
+				'accent'           => '#9b1f48',
+				'on-chrome'        => '#f0e6ea',
+				'chrome-muted'     => '#b79ea8',
+				'accent-on-chrome' => '#f59ab5',
+				'line'             => '#d9d0d3',
+			),
+		),
+		'teal' => array(
+			'label'  => '딥 틸 & 코퍼 — 청록 + 구리색',
+			'colors' => array(
+				'bg'               => '#d0dcdc',
+				'surface'          => '#ebf1f1',
+				'chrome'           => '#0f2c30',
+				'text'             => '#132225',
+				'muted'            => '#4f6366',
+				'accent'           => '#a3501b',
+				'on-chrome'        => '#e1ecec',
+				'chrome-muted'     => '#93afb1',
+				'accent-on-chrome' => '#f0995a',
+				'line'             => '#ccd8d8',
+			),
+		),
+	);
+}
+
+function fvarticle_reader_sanitize_palette( $value ) {
+	$palettes = fvarticle_reader_palettes();
+	return isset( $palettes[ $value ] ) ? $value : array_key_first( $palettes );
+}
+
+// 기본이 아닌 팔레트를 고르면 같은 CSS 변수를 :root에 덮어쓴다.
+function fvarticle_reader_palette_css() {
+	$palettes = fvarticle_reader_palettes();
+	$key      = fvarticle_reader_sanitize_palette( get_theme_mod( 'color_palette' ) );
+	if ( array_key_first( $palettes ) === $key ) {
+		return '';
+	}
+	$css = '';
+	foreach ( $palettes[ $key ]['colors'] as $name => $value ) {
+		$css .= '--' . $name . ':' . $value . ';';
+	}
+	return ':root{' . $css . '}';
+}
+
+function fvarticle_reader_customize_register( $wp_customize ) {
+	$palettes = fvarticle_reader_palettes();
+	$wp_customize->add_section(
+		'fvarticle_reader_palette',
+		array(
+			'title'       => '색상 팔레트',
+			'description' => '채널 분위기에 맞는 색 조합을 고르세요. 모든 조합은 글자 대비 기준(WCAG AA)을 통과한 값입니다.',
+			'priority'    => 30,
+		)
+	);
+	$wp_customize->add_setting(
+		'color_palette',
+		array(
+			'default'           => array_key_first( $palettes ),
+			'sanitize_callback' => 'fvarticle_reader_sanitize_palette',
+		)
+	);
+	$wp_customize->add_control(
+		'color_palette',
+		array(
+			'type'    => 'radio',
+			'section' => 'fvarticle_reader_palette',
+			'label'   => '팔레트',
+			'choices' => wp_list_pluck( $palettes, 'label' ),
+		)
+	);
+}
+add_action( 'customize_register', 'fvarticle_reader_customize_register' );
 
 // 홈 /page/N 404 방지: 404 판정은 메인 쿼리 기준인데 front-page의 최신 기사는
 // 커스텀 쿼리(5개/페이지)라 페이지 수가 어긋난다. 메인 쿼리도 5개로 맞춘다.
