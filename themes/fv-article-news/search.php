@@ -2,7 +2,7 @@
 /**
  * Search results template.
  *
- * @package sample-01
+ * @package fv-article-news
  */
 
 get_header();
@@ -12,7 +12,7 @@ get_header();
 	<h1 class="archive-title">
 		<?php
 		/* translators: %s: search query. */
-		printf( esc_html__( 'Search results for: %s', 'sample-01' ), '<span>' . esc_html( get_search_query() ) . '</span>' );
+		printf( esc_html__( 'Search results for: %s', 'fv-article-news' ), '<span>' . esc_html( get_search_query() ) . '</span>' );
 		?>
 	</h1>
 </header>
@@ -27,7 +27,7 @@ get_header();
 	the_posts_pagination();
 	?>
 <?php else : ?>
-	<p><?php esc_html_e( 'Nothing found.', 'sample-01' ); ?></p>
+	<p><?php esc_html_e( 'Nothing found.', 'fv-article-news' ); ?></p>
 	<?php get_search_form(); ?>
 <?php endif; ?>
 

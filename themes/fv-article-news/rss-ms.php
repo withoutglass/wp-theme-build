@@ -3,7 +3,7 @@
  * MSN 공급용 RSS2 피드 템플릿. URL: /feed/ms
  * 본문 링크 제거 + 실시간 인기기사 블록(UTM) 삽입.
  *
- * @package sample-01
+ * @package fv-article-news
  */
 
 header( 'Content-Type: ' . feed_content_type( 'rss2' ) . '; charset=' . get_option( 'blog_charset' ), true );

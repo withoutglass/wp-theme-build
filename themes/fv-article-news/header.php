@@ -2,7 +2,7 @@
 /**
  * Header template: slim bar with home link only (1채널 = 1사이트, 카테고리 없음).
  *
- * @package sample-01
+ * @package fv-article-news
  */
 ?>
 <!DOCTYPE html>
@@ -18,10 +18,10 @@
 	<div class="header-inner">
 		<nav class="site-nav">
 			<ul class="nav-list">
-				<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( '홈', 'sample-01' ); ?></a></li>
-				<?php $header_youtube = sample01_channel_option( 'youtube_url' ); ?>
+				<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( '홈', 'fv-article-news' ); ?></a></li>
+				<?php $header_youtube = fvarticle_news_channel_option( 'youtube_url' ); ?>
 				<?php if ( $header_youtube ) : ?>
-					<li><a href="<?php echo esc_url( $header_youtube ); ?>" target="_blank" rel="noopener"><?php esc_html_e( '유튜브 바로가기', 'sample-01' ); ?></a></li>
+					<li><a href="<?php echo esc_url( $header_youtube ); ?>" target="_blank" rel="noopener"><?php esc_html_e( '유튜브 바로가기', 'fv-article-news' ); ?></a></li>
 				<?php endif; ?>
 			</ul>
 		</nav>

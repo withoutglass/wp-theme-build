@@ -2,7 +2,7 @@
 /**
  * Archive template — category, tag, date, author listings.
  *
- * @package sample-01
+ * @package fv-article-news
  */
 
 get_header();
@@ -23,7 +23,7 @@ get_header();
 	the_posts_pagination();
 	?>
 <?php else : ?>
-	<p><?php esc_html_e( 'No posts found.', 'sample-01' ); ?></p>
+	<p><?php esc_html_e( 'No posts found.', 'fv-article-news' ); ?></p>
 <?php endif; ?>
 
 <?php get_footer(); ?>

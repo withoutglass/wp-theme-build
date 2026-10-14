@@ -2,12 +2,12 @@
 /**
  * Listing item with thumbnail: front page latest / archive / search.
  *
- * @package sample-01
+ * @package fv-article-news
  */
 ?>
 <article <?php post_class( 'list-item' ); ?>>
 	<?php if ( has_post_thumbnail() ) : ?>
-		<a href="<?php the_permalink(); ?>" class="list-thumb"<?php sample01_thumb_style_attr(); ?>><?php the_post_thumbnail( 'medium' ); ?></a>
+		<a href="<?php the_permalink(); ?>" class="list-thumb"<?php fvarticle_news_thumb_style_attr(); ?>><?php the_post_thumbnail( 'medium' ); ?></a>
 	<?php else : ?>
 		<a href="<?php the_permalink(); ?>" class="list-thumb"><div class="thumb-placeholder"></div></a>
 	<?php endif; ?>

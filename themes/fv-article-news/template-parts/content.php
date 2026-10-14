@@ -2,7 +2,7 @@
 /**
  * Listing item: title link + excerpt. Shared by index/archive/search.
  *
- * @package sample-01
+ * @package fv-article-news
  */
 ?>
 <article <?php post_class(); ?>>

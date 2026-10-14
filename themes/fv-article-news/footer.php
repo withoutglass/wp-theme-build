@@ -2,7 +2,7 @@
 /**
  * Footer template: logo + policy links + business info + copyright.
  *
- * @package sample-01
+ * @package fv-article-news
  */
 ?>
 </main>
@@ -17,11 +17,11 @@
 		</div>
 
 		<ul class="footer-links">
-			<li><a href="<?php echo esc_url( home_url( '/terms/' ) ); ?>"><?php esc_html_e( '이용약관', 'sample-01' ); ?></a></li>
-			<li><a href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>"><?php esc_html_e( '개인정보처리방침', 'sample-01' ); ?></a></li>
-			<?php $footer_email = sample01_channel_option( 'contact_email' ); ?>
+			<li><a href="<?php echo esc_url( home_url( '/terms/' ) ); ?>"><?php esc_html_e( '이용약관', 'fv-article-news' ); ?></a></li>
+			<li><a href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>"><?php esc_html_e( '개인정보처리방침', 'fv-article-news' ); ?></a></li>
+			<?php $footer_email = fvarticle_news_channel_option( 'contact_email' ); ?>
 			<?php if ( $footer_email ) : ?>
-				<li><a href="mailto:<?php echo esc_attr( $footer_email ); ?>"><?php esc_html_e( '문의하기', 'sample-01' ); ?></a></li>
+				<li><a href="mailto:<?php echo esc_attr( $footer_email ); ?>"><?php esc_html_e( '문의하기', 'fv-article-news' ); ?></a></li>
 			<?php endif; ?>
 		</ul>
 
@@ -36,8 +36,8 @@
 		</p>
 
 		<p class="footer-copyright">
-			<?php bloginfo( 'name' ); ?><?php esc_html_e( '의 모든 콘텐츠는 저작권법의 보호를 받은 바, 무단 전재, 복사, 배포 등을 금합니다.', 'sample-01' ); ?><br>
-			&copy; Copyright <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php esc_html_e( '주식회사 패스트뷰', 'sample-01' ); ?>. All Rights Reserved.
+			<?php bloginfo( 'name' ); ?><?php esc_html_e( '의 모든 콘텐츠는 저작권법의 보호를 받은 바, 무단 전재, 복사, 배포 등을 금합니다.', 'fv-article-news' ); ?><br>
+			&copy; Copyright <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php esc_html_e( '주식회사 패스트뷰', 'fv-article-news' ); ?>. All Rights Reserved.
 		</p>
 	</div>
 </footer>

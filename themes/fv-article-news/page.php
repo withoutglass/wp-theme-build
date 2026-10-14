@@ -2,7 +2,7 @@
 /**
  * Static page template.
  *
- * @package sample-01
+ * @package fv-article-news
  */
 
 get_header();
