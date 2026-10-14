@@ -27,6 +27,8 @@
   - 원본은 `shared/palettes.json`(데이터)·`shared/palette-control.php`(견본 카드 컨트롤). 고친 뒤 `python3 tools/build-palettes.py` → 대비 검사 후 각 테마 `inc/`로 생성·복사. 테마의 `inc/` 사본은 직접 고치지 않는다.
   - 검사 기준: 테마가 쓰는 글자/배경 조합 9가지(스크립트 PAIRS)가 라이트·다크 모두 4.5:1 이상. 테마에 새 색 조합을 쓰면 PAIRS에도 추가할 것.
   - 색은 전부 style.css :root 변수로만 칠할 것 — 새 색을 하드코딩하면 팔레트 전환에서 빠진다. 팔레트를 쓰는 테마를 새로 만들면 스크립트 THEMES에 추가.
+- `fv-news-portal` = 05 테마. MSN 서비스와 무관한 **순수 범용 뉴스 샘플**(00에서 출발). 포털형: 상단 바(날짜·검색) → 제호 → 포인트색 카테고리 메뉴 바 → 최신 기사 띠, 홈은 헤드라인(대표 1 + 주요 4) + 카테고리 섹션(글 수 순 최상위 카테고리 최대 6개), 사이드바 위젯(비면 인기 뉴스=댓글 수 순·최신 뉴스), 기사에 바이라인·태그·기자 소개·이전/다음·같은 카테고리 관련 기사·댓글. 메뉴 위치 primary/footer(주 메뉴 없으면 카테고리로 대체).
+  - 색: 흰 바탕 고정 + 포인트색 8개 프리셋(functions.php `fvnews_portal_accents`, 라이트/다크 쌍) + 모드 라이트/다크/OS. 팔레트 빌드 스크립트(shared/·tools/) 대상이 아니다. 모드는 `<html class="mode-*">`로 style.css가 처리.
 - `fv-article-news`는 2026-10 `01`에서 이름을 바꿨다. 채널 설정 옵션 키 `sample01_channel_options`는 기존 데이터 유지를 위해 그대로 둔다.
 - `00` = **최소 베이스라인** 테마. 실사용에 가까운 최소 골격(zero-base 클래식 테마)이며,
   새 테마는 특별한 사유가 없으면 이 구조에서 출발한다.
@@ -46,7 +48,7 @@
 - `.wp-local/` (gitignore됨)에 로컬 워드프레스가 구성되어 있다: 정적 PHP 8.3 + wp-cli + SQLite.
 - 서버 실행: `.wp-local/serve` → http://localhost:8881 (admin/admin).
   (`wp server`는 임시폴더 라우터를 써서 macOS 임시파일 청소 시 죽는다 — serve 스크립트는 영구 라우터 + 멀티 워커라 안전.)
-- `themes/00/`, `themes/fv-article-news/`, `themes/fv-article-reader/`, `themes/fv-article-rail/`, `themes/fv-article-stream/`은 `.wp-local/site/wp-content/themes/`에 심볼릭 링크되어 있어 파일 수정이 즉시 반영된다.
+- `themes/00/`, `themes/fv-article-news/`, `themes/fv-article-reader/`, `themes/fv-article-rail/`, `themes/fv-article-stream/`, `themes/fv-news-portal/`은 `.wp-local/site/wp-content/themes/`에 심볼릭 링크되어 있어 파일 수정이 즉시 반영된다.
 - wp-cli 사용: `.wp-local/wp <command>` (예: `post create`, `theme activate`).
 - 새 맥에서는 `.wp-local`이 없으므로 같은 방식으로 재구성해야 한다.
 
