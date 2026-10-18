@@ -20,7 +20,7 @@ import shutil
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-THEMES = ['fv-article-reader', 'fv-article-rail', 'fv-article-stream']
+THEMES = ['fv-article-news', 'fv-article-news-category', 'fv-article-reader', 'fv-article-rail', 'fv-article-stream']
 ROLES = ['bg', 'surface', 'chrome', 'text', 'muted', 'accent', 'on-accent', 'on-chrome', 'chrome-muted', 'accent-on-chrome', 'line']
 
 # (글자, 배경, 어디서 쓰는지)
@@ -30,7 +30,7 @@ PAIRS = [
     ('muted', 'surface', '메타·캡션'),
     ('muted', 'bg', '광고 자리 표시'),
     ('accent', 'surface', '링크·다음 기사 라벨'),
-    ('on-accent', 'accent', '순위 배지(02·04)·더 보기 버튼 hover(04)'),
+    ('on-accent', 'accent', '순위 배지(01·02·04)·현재 페이지 번호(01)·더 보기 버튼 hover(04)'),
     ('on-chrome', 'chrome', '틀 위 제목'),
     ('chrome-muted', 'chrome', '틀 위 보조 글자'),
     ('accent-on-chrome', 'chrome', '틀 위 포인트·버튼'),

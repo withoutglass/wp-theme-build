@@ -1,0 +1,68 @@
+<?php
+/**
+ * Sidebar: 실시간 TOP — 인기 집계 미구현, 우선 최신글로 채운다.
+ *
+ * @package fv-article-news-category
+ */
+
+// 카테고리(채널) 페이지에서는 그 채널 글만.
+$top = new WP_Query(
+	array_merge(
+		array(
+			'posts_per_page'      => 5,
+			'ignore_sticky_posts' => true,
+		),
+		is_category() ? array( 'cat' => get_queried_object_id() ) : array()
+	)
+);
+?>
+<aside class="site-sidebar">
+	<?php if ( $top->have_posts() ) : ?>
+		<section class="realtime-top">
+			<h2 class="section-title"><?php esc_html_e( '실시간 TOP', 'fv-article-news-category' ); ?></h2>
+			<ol class="top-list">
+				<?php
+				while ( $top->have_posts() ) :
+					$top->the_post();
+					?>
+					<li class="top-item">
+						<div class="top-text">
+							<h3 class="top-title">
+								<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+							</h3>
+							<p class="entry-meta"><?php echo esc_html( get_the_date( 'Y.m.d' ) ); ?></p>
+						</div>
+						<?php if ( has_post_thumbnail() ) : ?>
+							<a href="<?php the_permalink(); ?>" class="top-thumb"<?php fvarticle_news_category_thumb_style_attr(); ?>><?php // 'thumbnail'은 150×150 강제 크롭 파일이라 contain이어도 잘려 보임 — 크롭 없는 medium 사용. ?>
+							<?php the_post_thumbnail( 'medium' ); ?></a>
+						<?php endif; ?>
+					</li>
+				<?php endwhile; ?>
+			</ol>
+		</section>
+		<?php wp_reset_postdata(); ?>
+	<?php endif; ?>
+
+	<div class="ad-slot ad-slot-side"><span><?php esc_html_e( 'AD — 사이드바 하단 (300×250)', 'fv-article-news-category' ); ?></span></div>
+
+	<?php // 최근 업로드 영상은 기사 상세에서만 노출. ?>
+	<?php $recent_videos = is_singular( 'post' ) ? fvarticle_news_category_recent_videos( 4 ) : array(); ?>
+	<?php if ( $recent_videos ) : ?>
+		<section class="recent-videos">
+			<h2 class="section-title"><?php esc_html_e( '최근 업로드 영상', 'fv-article-news-category' ); ?></h2>
+			<ul class="video-list">
+				<?php foreach ( $recent_videos as $video ) : ?>
+					<li>
+						<a href="<?php echo esc_url( $video['url'] ); ?>" target="_blank" rel="noopener" class="video-item">
+							<div class="video-thumb">
+								<img src="<?php echo esc_url( $video['thumb'] ); ?>" alt="" loading="lazy">
+								<span class="video-play" aria-hidden="true"></span>
+							</div>
+							<h3 class="video-title"><?php echo esc_html( $video['title'] ); ?></h3>
+						</a>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</section>
+	<?php endif; ?>
+</aside>

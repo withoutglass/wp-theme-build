@@ -3,7 +3,7 @@ Theme Name: FV Article News
 Theme URI: https://github.com/withoutglass/wp-theme-build
 Author: withoutglass
 Description: 유튜브→article 서비스용 뉴스형 테마. MSN 피드 공급 + 광고 수익형 사이트.
-Version: 0.4.4
+Version: 0.5.0
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
@@ -15,9 +15,16 @@ Update URI: false
 :root {
   --max-width: 1080px;
   --content-width: 720px;
+  --bg: #f5f5f5;
+  --surface: #ffffff;
+  --chrome: #111111;
   --text: #1a1a1a;
-  --muted: #888;
+  --muted: #707070;
   --accent: #3a6ea5;
+  --on-accent: #ffffff;
+  --on-chrome: #ffffff;
+  --chrome-muted: #a0a0a0;
+  --accent-on-chrome: #8ab4e8;
   --line: #e5e5e5;
 }
 
@@ -28,7 +35,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   line-height: 1.6;
   color: var(--text);
-  background: #fff;
+  background: var(--surface);
 }
 
 a { color: inherit; }
@@ -84,7 +91,7 @@ body.page .site-content article {
 
 .site-footer {
   margin-top: 3rem;
-  background: #f5f5f5;
+  background: var(--bg);
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.8125rem;
@@ -116,7 +123,7 @@ body.page .site-content article {
 .footer-links li:not(:last-child)::after {
   content: "|";
   margin: 0 0.75rem;
-  color: #ccc;
+  color: var(--muted);
 }
 
 .footer-links a {
@@ -135,12 +142,12 @@ body.page .site-content article {
 .footer-info span + span::before {
   content: "|";
   margin: 0 0.625rem;
-  color: #ccc;
+  color: var(--muted);
 }
 
 .footer-copyright {
   margin: 1.5rem 0 0;
-  color: #aaa;
+  color: var(--muted);
 }
 
 /* ---------- Front page: channel profile ---------- */
@@ -182,8 +189,8 @@ body.page .site-content article {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #111;
-  color: #fff;
+  background: var(--chrome);
+  color: var(--on-chrome);
   font-size: 2.5rem;
   font-weight: 800;
 }
@@ -236,7 +243,7 @@ body.page .site-content article {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 4px;
-  background: #f2f2f2;
+  background: var(--bg);
 }
 
 /* object-fit은 파일 하단 "썸네일 블러 배경" 블록에서 contain으로 일괄 지정 */
@@ -246,7 +253,7 @@ body.page .site-content article {
   height: 100%;
 }
 
-.thumb-placeholder { background: #e9e9e9; }
+.thumb-placeholder { background: var(--line); }
 
 .rank-badge {
   position: absolute;
@@ -259,7 +266,7 @@ body.page .site-content article {
   align-items: center;
   justify-content: center;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-size: 0.875rem;
   font-weight: 700;
 }
@@ -296,7 +303,7 @@ body.page .site-content article {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 4px;
-  background: #f2f2f2;
+  background: var(--bg);
 }
 
 .list-thumb img {
@@ -372,7 +379,7 @@ body.page .site-content article {
 .front-pagination .page-numbers.current {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 700;
 }
 
@@ -451,7 +458,7 @@ body.single .site-sidebar {
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 4px;
-  background: #f2f2f2;
+  background: var(--bg);
 }
 
 .top-thumb img {
@@ -476,7 +483,7 @@ body.single .site-sidebar {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 6px;
-  background: #f2f2f2;
+  background: var(--bg);
 }
 
 .video-thumb img {
@@ -600,7 +607,7 @@ body.single .site-sidebar {
 .entry-content figcaption {
   margin-top: 0.375rem;
   text-align: left;
-  color: #999;
+  color: var(--muted);
   font-size: 0.75rem;
   line-height: 1.5;
 }
@@ -609,11 +616,11 @@ body.single .site-sidebar {
 .ad-slot {
   margin: 1.5rem 0;
   padding: 2.5rem 1rem;
-  background: #f8f8f8;
-  border: 1px dashed #ccc;
+  background: var(--bg);
+  border: 1px dashed var(--muted);
   border-radius: 4px;
   text-align: center;
-  color: #aaa;
+  color: var(--muted);
   font-size: 0.8125rem;
   letter-spacing: 0.05em;
 }
@@ -640,7 +647,7 @@ body.single .site-sidebar {
   gap: 1rem;
   margin: 2.5rem 0;
   padding: 1.25rem;
-  background: #f8f8f8;
+  background: var(--bg);
   border-radius: 8px;
 }
 

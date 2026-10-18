@@ -15,13 +15,21 @@
   - wordpress.org 동명 테마의 "업데이트"로 덮어써지지 않도록 style.css에 `Update URI: false`를 둔다.
   - slug를 바꾸면 워드프레스는 별개 테마로 인식한다(로고·메뉴 위치 등 theme_mod 재설정 필요). DB 옵션 키는 바꾸지 말 것.
 - 각 폴더 = 하나의 독립적인 테마 시도.
+- `fv-article-news-category` = fv-article-news(0.5.0)를 복제한 멀티 채널판. 여러 채널을 한 방송사 사이트로 묶어 채널 = 카테고리로 운영한다(01은 1채널 = 1사이트라 내비에 카테고리가 없음).
+  - 상단 내비: 홈 → 채널(카테고리) → 유튜브 바로가기. 외모 > 메뉴의 주 메뉴가 지정돼 있으면 그 순서, 없으면 최상위 카테고리 이름순(글 없는 기본 카테고리 제외). 모바일(≤800px)은 가로 스크롤.
+  - 채널 아이콘: 글 > 카테고리 추가·편집 화면의 "채널 아이콘"에서 미디어 라이브러리 이미지 선택 → term meta `channel_icon`(첨부파일 ID). 내비에 30px 원형으로 표시. 선택 UI는 `assets/category-icon.js`.
+  - 카테고리 = 채널 페이지(`category.php`): 홈과 같은 모양(프로필 + 주간 + 최신 + 사이드바), 기사·실시간 TOP은 그 카테고리 글만. 프로필 아바타 = 채널 아이콘, 기사 수 = 카테고리 글 수, 설명 = 카테고리 설명. 홈과 카테고리 페이지 본문은 `template-parts/channel-home.php` 하나를 같이 쓴다(한쪽만 고치지 말 것).
+  - 글이 4개 이하인 채널은 주간 기사를 최신 기사에서 빼지 않는다(빼면 최신 기사가 빈다).
+  - 채널별 MSN 피드: `<카테고리 주소>/feed/ms/` (예: 카테고리 베이스가 news면 `/news/<slug>/feed/ms/`). add_feed가 카테고리 피드 경로도 열어 주고 rss-ms.php는 메인 쿼리를 쓰므로 그 카테고리 글만 나온다. 채널 피드는 `<link>`=카테고리 페이지, `<description>`=카테고리 설명(없으면 사이트 설명), 실시간 인기기사 블록도 그 카테고리 글만.
+  - 채널 설정 옵션(`sample01_channel_options`)은 01과 공유. 프로필의 SNS 버튼도 사이트 공통 값이라 카테고리 페이지에서도 같은 링크다.
 - `fv-article-reader` = 같은 서비스의 02 테마. fv-article-news를 복제해 리더형 1단 레이아웃 + 미드나잇 인디고 팔레트로 바꿨다(사이드바 없음, 본문 중간·넓은 화면 오른쪽 여백 광고). 채널 설정 옵션을 fv-article-news와 공유한다.
 - `fv-article-rail` = 같은 서비스의 03 테마. fv-article-reader를 복제해 채널 레일형(왼쪽 고정 레일: 채널 프로필·실시간 TOP, 오른쪽 160×600 광고 칼럼 ≥1280px) + 딥 포레스트 팔레트로 바꿨다. 1023px 이하에서 레일은 상단 채널 바 + 가로 TOP 칩이 된다. 채널 설정 옵션 공유.
 - `fv-article-stream` = 04 테마. fv-article-reader 기반 1단 + 버건디 와인 기본 팔레트. 기사 상세에서 이전 발행글을 AJAX로 이어 붙이는 무한 스트림이 핵심.
   - REST `GET /wp-json/fv-article-stream/v1/next?after=<ID>` → 서버가 렌더링한 기사 HTML(`template-parts/stream-article.php`) + url/title/next_url. 순서는 (발행 시각, ID) 내림차순 — 일괄 발행으로 같은 초의 글이 많아 get_adjacent_post는 글을 건너뛴다.
   - `assets/stream.js`: 자동 5편 후 "다음 기사 보기" 버튼. 화면 가운데 기사로 URL·탭 제목을 replaceState (GA4 향상된 측정의 "브라우저 기록 이벤트 기반 페이지 변경"이 페이지뷰로 집계). 자동 로딩 트리거는 스크롤 위치 체크 — IntersectionObserver는 End 키 점프 때 놓친다.
   - 본문 중간 광고는 REST 렌더링에서도 들어가야 해서 the_content 필터가 아닌 헬퍼를 템플릿에서 직접 호출. JS가 없으면 "다음 기사 보기"는 일반 링크.
-- fv-article-reader·fv-article-rail·fv-article-stream은 외모 > 사용자 정의하기 > 색상 팔레트에서 24개 팔레트 중 색 견본 카드로 선택(theme_mod `color_palette`, 기본 = 각 테마 고유색 indigo/forest/burgundy).
+- fv-article-news·fv-article-news-category·fv-article-reader·fv-article-rail·fv-article-stream은 외모 > 사용자 정의하기 > 색상 팔레트에서 25개 팔레트 중 색 견본 카드로 선택(theme_mod `color_palette`, 기본 = 각 테마 고유색 classic(01·멀티 채널판)/indigo/forest/burgundy).
+  - 01의 `classic`은 기존 흰 바탕 + 블루 그대로이고, 대비 기준 때문에 `--muted`만 #888 → #707070으로 진해졌다. 01은 바탕(body) = `--surface`, 푸터·채널 박스·광고 자리 = `--bg`. 유튜브 빨강·SNS 버튼·영상 검정 등 브랜드 색은 하드코딩 유지.
   - 모드: 사용자 정의하기 > 색상 팔레트 > 모드 = 라이트(기본) / 다크 / OS 설정 따르기 (theme_mod `color_mode`). 팔레트마다 `dark` 값이 있고, 다크·OS 모드면 같은 CSS 변수를 다크 값으로 덮어쓴다(OS는 prefers-color-scheme 미디어 쿼리). 포인트색 위 글자는 `--on-accent` 변수(라이트 흰색, 다크 틀색)로 칠한다.
   - 새 팔레트에 `dark`를 안 넣으면 빌드 스크립트가 라이트 값의 색 계열로 자동 생성해 palettes.json에 써 넣는다.
   - 원본은 `shared/palettes.json`(데이터)·`shared/palette-control.php`(견본 카드 컨트롤). 고친 뒤 `python3 tools/build-palettes.py` → 대비 검사 후 각 테마 `inc/`로 생성·복사. 테마의 `inc/` 사본은 직접 고치지 않는다.
@@ -48,7 +56,7 @@
 - `.wp-local/` (gitignore됨)에 로컬 워드프레스가 구성되어 있다: 정적 PHP 8.3 + wp-cli + SQLite.
 - 서버 실행: `.wp-local/serve` → http://localhost:8881 (admin/admin).
   (`wp server`는 임시폴더 라우터를 써서 macOS 임시파일 청소 시 죽는다 — serve 스크립트는 영구 라우터 + 멀티 워커라 안전.)
-- `themes/00/`, `themes/fv-article-news/`, `themes/fv-article-reader/`, `themes/fv-article-rail/`, `themes/fv-article-stream/`, `themes/fv-news-portal/`은 `.wp-local/site/wp-content/themes/`에 심볼릭 링크되어 있어 파일 수정이 즉시 반영된다.
+- `themes/00/`, `themes/fv-article-news/`, `themes/fv-article-news-category/`, `themes/fv-article-reader/`, `themes/fv-article-rail/`, `themes/fv-article-stream/`, `themes/fv-news-portal/`은 `.wp-local/site/wp-content/themes/`에 심볼릭 링크되어 있어 파일 수정이 즉시 반영된다.
 - wp-cli 사용: `.wp-local/wp <command>` (예: `post create`, `theme activate`).
 - 새 맥에서는 `.wp-local`이 없으므로 같은 방식으로 재구성해야 한다.
 

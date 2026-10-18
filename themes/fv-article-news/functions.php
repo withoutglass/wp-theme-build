@@ -47,8 +47,127 @@ function fvarticle_news_enqueue() {
 		array(),
 		wp_get_theme()->get( 'Version' )
 	);
+
+	$palette_css = fvarticle_news_palette_css();
+	if ( $palette_css ) {
+		wp_add_inline_style( 'fv-article-news-style', $palette_css );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'fvarticle_news_enqueue' );
+
+// ---------- 색상 팔레트 (외모 > 사용자 정의하기 > 색상 팔레트) ----------
+
+// 팔레트 데이터는 inc/palettes.php (shared/palettes.json에서 tools/build-palettes.py로 생성).
+// 테마가 쓰는 글자/배경 조합이 모두 WCAG AA(4.5:1) 이상인 팔레트만 들어 있다. 자유 색상 선택은 대비를 보장할 수 없어 두지 않는다.
+function fvarticle_news_palettes() {
+	static $palettes = null;
+	if ( null === $palettes ) {
+		$palettes = require get_theme_file_path( 'inc/palettes.php' );
+	}
+	return $palettes;
+}
+
+// 기본 팔레트: style.css :root 값과 같은 팔레트.
+function fvarticle_news_default_palette() {
+	return 'classic';
+}
+
+function fvarticle_news_sanitize_palette( $value ) {
+	$palettes = fvarticle_news_palettes();
+	return isset( $palettes[ $value ] ) ? $value : fvarticle_news_default_palette();
+}
+
+// 색 모드: light = 라이트만, dark = 다크만, auto = 방문자 OS 설정(prefers-color-scheme)을 따른다.
+function fvarticle_news_color_modes() {
+	return array(
+		'light' => '라이트',
+		'dark'  => '다크',
+		'auto'  => 'OS 설정 따르기 (기기가 다크 모드면 다크)',
+	);
+}
+
+function fvarticle_news_sanitize_color_mode( $value ) {
+	return array_key_exists( $value, fvarticle_news_color_modes() ) ? $value : 'light';
+}
+
+function fvarticle_news_css_vars( $colors ) {
+	$css = '';
+	foreach ( $colors as $name => $value ) {
+		$css .= '--' . $name . ':' . $value . ';';
+	}
+	return $css;
+}
+
+// style.css :root는 기본 팔레트의 라이트 값. 다른 팔레트면 라이트 값을 덮어쓰고,
+// 다크/OS 모드면 같은 변수를 다크 값으로 덮어쓴다 (OS 모드는 미디어 쿼리 안에서만).
+function fvarticle_news_palette_css() {
+	$key     = fvarticle_news_sanitize_palette( get_theme_mod( 'color_palette' ) );
+	$mode    = fvarticle_news_sanitize_color_mode( get_theme_mod( 'color_mode' ) );
+	$palette = fvarticle_news_palettes()[ $key ];
+	$css     = '';
+
+	if ( fvarticle_news_default_palette() !== $key ) {
+		$css .= ':root{' . fvarticle_news_css_vars( $palette['colors'] ) . '}';
+	}
+
+	$dark = ':root{' . fvarticle_news_css_vars( $palette['dark'] ) . 'color-scheme:dark;}';
+	if ( 'dark' === $mode ) {
+		$css .= $dark;
+	} elseif ( 'auto' === $mode ) {
+		$css .= '@media (prefers-color-scheme: dark){' . $dark . '}';
+	}
+	return $css;
+}
+
+function fvarticle_news_customize_register( $wp_customize ) {
+	require_once get_theme_file_path( 'inc/palette-control.php' );
+
+	$wp_customize->add_section(
+		'fvarticle_news_palette',
+		array(
+			'title'       => '색상 팔레트',
+			'description' => '채널 분위기에 맞는 색 조합을 고르세요. 모든 조합은 글자 대비 기준(WCAG AA)을 통과한 값입니다.',
+			'priority'    => 30,
+		)
+	);
+	$wp_customize->add_setting(
+		'color_mode',
+		array(
+			'default'           => 'light',
+			'sanitize_callback' => 'fvarticle_news_sanitize_color_mode',
+		)
+	);
+	$wp_customize->add_control(
+		'color_mode',
+		array(
+			'type'        => 'radio',
+			'section'     => 'fvarticle_news_palette',
+			'label'       => '모드',
+			'description' => '다크 모드에서는 애드센스 광고(흰 바탕)가 밝게 튀어 보일 수 있습니다.',
+			'choices'     => fvarticle_news_color_modes(),
+		)
+	);
+	$wp_customize->add_setting(
+		'color_palette',
+		array(
+			'default'           => fvarticle_news_default_palette(),
+			'sanitize_callback' => 'fvarticle_news_sanitize_palette',
+		)
+	);
+	$wp_customize->add_control(
+		new FV_Palette_Control(
+			$wp_customize,
+			'color_palette',
+			array(
+				'section'     => 'fvarticle_news_palette',
+				'label'       => '팔레트',
+				'palettes'    => fvarticle_news_palettes(),
+				'default_key' => fvarticle_news_default_palette(),
+			)
+		)
+	);
+}
+add_action( 'customize_register', 'fvarticle_news_customize_register' );
 
 // 홈 /page/N 404 방지: 404 판정은 메인 쿼리 기준인데 front-page의 최신 기사는
 // 커스텀 쿼리(5개/페이지)라 페이지 수가 어긋난다. 메인 쿼리도 5개로 맞춘다.
