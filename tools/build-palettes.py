@@ -94,9 +94,9 @@ def derive_dark(light):
     ch, _, cs = hls(light['chrome'])
     ah, _, as_ = hls(light['accent-on-chrome'])
     d = {
-        'chrome': to_hex(ch, 0.07, min(cs, 0.35)),
+        'chrome': to_hex(ch, 0.055, min(cs, 0.35)),
         'bg': to_hex(ch, 0.10, min(cs, 0.25)),
-        'surface': to_hex(ch, 0.145, min(cs, 0.22)),
+        'surface': to_hex(ch, 0.17, min(cs, 0.22)),
         'text': to_hex(ch, 0.91, min(cs, 0.15)),
         'on-chrome': to_hex(ch, 0.92, min(cs, 0.18)),
     }
@@ -105,7 +105,7 @@ def derive_dark(light):
     d['accent'] = tune(ah, as_, 0.60, 0.01, lambda c: contrast(c, d['surface']) >= 4.8)
     d['on-accent'] = d['chrome']
     d['accent-on-chrome'] = tune(ah, as_, 0.62, 0.01, lambda c: contrast(c, d['chrome']) >= 6.5)
-    d['line'] = to_hex(ch, 0.22, min(cs, 0.18))
+    d['line'] = to_hex(ch, 0.25, min(cs, 0.18))
     return {r: d[r] for r in ROLES}
 
 
