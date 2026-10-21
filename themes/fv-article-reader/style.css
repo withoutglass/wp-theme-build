@@ -655,9 +655,22 @@ a.page-numbers:hover {
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
 }
 
-/* 어두운 틀 위에서도 구분되도록 X·틱톡·메일은 테두리를 둔다 */
+.btn-facebook { background: #1877f2; }
+
+.btn-naver-blog,
+.btn-naver-cafe { background: #03c75a; }
+
+/* 카카오 노랑 위에는 흰 글자가 안 보여 브랜드 가이드대로 검은 글자 */
+.btn-kakao { background: #fee500; }
+
+.channel-links .btn-kakao { color: #191919; }
+
+.btn-band { background: #1ec800; }
+
+/* 어두운 틀 위에서도 구분되도록 X·틱톡·스레드·메일은 테두리를 둔다 */
 .btn-x,
 .btn-tiktok,
+.btn-threads,
 .btn-mail {
   background: transparent;
   box-shadow: inset 0 0 0 1px var(--chrome-muted);

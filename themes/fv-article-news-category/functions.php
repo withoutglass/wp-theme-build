@@ -287,15 +287,21 @@ function fvarticle_news_category_channel_sanitize( $input ) {
 	delete_transient( 'fvarticle_news_category_yt_videos' );
 
 	return array(
-		'youtube_url'   => esc_url_raw( $input['youtube_url'] ?? '' ),
-		'yt_channel_id' => sanitize_text_field( $input['yt_channel_id'] ?? '' ),
-		'yt_api_key'    => sanitize_text_field( $input['yt_api_key'] ?? '' ),
-		'instagram_url' => esc_url_raw( $input['instagram_url'] ?? '' ),
-		'x_url'         => esc_url_raw( $input['x_url'] ?? '' ),
-		'tiktok_url'    => esc_url_raw( $input['tiktok_url'] ?? '' ),
-		'contact_email' => sanitize_email( $input['contact_email'] ?? '' ),
+		'youtube_url'    => esc_url_raw( $input['youtube_url'] ?? '' ),
+		'yt_channel_id'  => sanitize_text_field( $input['yt_channel_id'] ?? '' ),
+		'yt_api_key'     => sanitize_text_field( $input['yt_api_key'] ?? '' ),
+		'instagram_url'  => esc_url_raw( $input['instagram_url'] ?? '' ),
+		'x_url'          => esc_url_raw( $input['x_url'] ?? '' ),
+		'tiktok_url'     => esc_url_raw( $input['tiktok_url'] ?? '' ),
+		'facebook_url'   => esc_url_raw( $input['facebook_url'] ?? '' ),
+		'threads_url'    => esc_url_raw( $input['threads_url'] ?? '' ),
+		'naver_blog_url' => esc_url_raw( $input['naver_blog_url'] ?? '' ),
+		'naver_cafe_url' => esc_url_raw( $input['naver_cafe_url'] ?? '' ),
+		'kakao_url'      => esc_url_raw( $input['kakao_url'] ?? '' ),
+		'band_url'       => esc_url_raw( $input['band_url'] ?? '' ),
+		'contact_email'  => sanitize_email( $input['contact_email'] ?? '' ),
 		// 헤더 스크립트는 GA/애드센스 코드 원문이 필요하므로 unfiltered_html 권한자에 한해 그대로 저장.
-		'head_scripts'  => current_user_can( 'unfiltered_html' ) ? trim( (string) ( $input['head_scripts'] ?? '' ) ) : fvarticle_news_category_channel_option( 'head_scripts' ),
+		'head_scripts'   => current_user_can( 'unfiltered_html' ) ? trim( (string) ( $input['head_scripts'] ?? '' ) ) : fvarticle_news_category_channel_option( 'head_scripts' ),
 	);
 }
 
@@ -310,14 +316,20 @@ add_action( 'wp_head', 'fvarticle_news_category_output_head_scripts', 20 );
 
 function fvarticle_news_category_channel_settings_page() {
 	$fields = array(
-		'youtube_url'   => array( '유튜브 채널 URL', '구독하기 버튼과 헤더 "유튜브 바로가기"에 사용됩니다.' ),
-		'yt_channel_id' => array( '유튜브 채널 ID', '"최근 업로드 영상" 위젯에 사용됩니다. UC로 시작하는 ID (유튜브 채널 > 정보 > 공유에서 확인).' ),
-		'yt_api_key'    => array( 'YouTube API 키 (선택)', '비워두면 채널 RSS로 최근 영상을 가져옵니다(권장 기본값). RSS가 안 되는 환경에서만 YouTube Data API v3 키를 발급해 입력하세요.' ),
-		'instagram_url' => array( '인스타그램 URL', '비워두면 버튼이 표시되지 않습니다.' ),
-		'x_url'         => array( 'X(트위터) URL', '비워두면 버튼이 표시되지 않습니다.' ),
-		'tiktok_url'    => array( '틱톡 URL', '비워두면 버튼이 표시되지 않습니다.' ),
-		'contact_email' => array( '문의 이메일', '헤더 "문의하기"와 메일 문의 버튼에 사용됩니다.' ),
-		'head_scripts'  => array( '헤더 스크립트', '모든 페이지의 <head>에 그대로 출력됩니다. Google 애널리틱스, 애드센스 코드 등을 <script> 태그째 붙여넣으세요.' ),
+		'youtube_url'    => array( '유튜브 채널 URL', '구독하기 버튼과 헤더 "유튜브 바로가기"에 사용됩니다.' ),
+		'yt_channel_id'  => array( '유튜브 채널 ID', '"최근 업로드 영상" 위젯에 사용됩니다. UC로 시작하는 ID (유튜브 채널 > 정보 > 공유에서 확인).' ),
+		'yt_api_key'     => array( 'YouTube API 키 (선택)', '비워두면 채널 RSS로 최근 영상을 가져옵니다(권장 기본값). RSS가 안 되는 환경에서만 YouTube Data API v3 키를 발급해 입력하세요.' ),
+		'instagram_url'  => array( '인스타그램 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'x_url'          => array( 'X(트위터) URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'tiktok_url'     => array( '틱톡 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'facebook_url'   => array( '페이스북 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'threads_url'    => array( '스레드 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'naver_blog_url' => array( '네이버 블로그 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'naver_cafe_url' => array( '네이버 카페 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'kakao_url'      => array( '카카오톡 채널 URL', 'pf.kakao.com 주소. 비워두면 버튼이 표시되지 않습니다.' ),
+		'band_url'       => array( '네이버 밴드 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'contact_email'  => array( '문의 이메일', '헤더 "문의하기"와 메일 문의 버튼에 사용됩니다.' ),
+		'head_scripts'   => array( '헤더 스크립트', '모든 페이지의 <head>에 그대로 출력됩니다. Google 애널리틱스, 애드센스 코드 등을 <script> 태그째 붙여넣으세요.' ),
 	);
 	?>
 	<div class="wrap">

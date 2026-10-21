@@ -161,11 +161,13 @@ body.page .site-content article {
   border-bottom: 1px solid var(--line);
 }
 
-/* 홈 프로필 블록에서는 버튼을 우상단에 고정 */
+/* 홈 프로필 블록에서는 버튼을 오른쪽 칸에 (SNS가 많으면 여러 줄, 프로필 글을 덮지 않게 최대 45%) */
 .channel-profile .channel-links {
-  position: absolute;
-  top: 1.5rem;
-  right: 0;
+  flex: 0 1 auto;
+  max-width: 45%;
+  align-self: flex-start;
+  justify-content: flex-end;
+  margin-top: 0;
 }
 
 .channel-profile .channel-info {
@@ -709,6 +711,20 @@ body.single .site-sidebar {
 
 .btn-mail { background: #64748b; }
 
+.btn-threads { background: #000; }
+
+.btn-facebook { background: #1877f2; }
+
+.btn-naver-blog,
+.btn-naver-cafe { background: #03c75a; }
+
+/* 카카오 노랑 위에는 흰 글자가 안 보여 브랜드 가이드대로 검은 글자 */
+.btn-kakao { background: #fee500; }
+
+.channel-links .btn-kakao { color: #191919; }
+
+.btn-band { background: #1ec800; }
+
 .related-grid { grid-template-columns: repeat(3, 1fr); }
 
 /* ---------- Archive ---------- */
@@ -766,8 +782,9 @@ body.search article {
   .channel-profile { flex-wrap: wrap; }
 
   .channel-profile .channel-links {
-    position: static;
     width: 100%;
+    max-width: none;
+    justify-content: flex-start;
   }
 
   .front-columns { grid-template-columns: 1fr; }

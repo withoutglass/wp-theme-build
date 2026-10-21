@@ -283,19 +283,27 @@ function fvarticle_news_channel_settings_init() {
 add_action( 'admin_init', 'fvarticle_news_channel_settings_init' );
 
 function fvarticle_news_channel_sanitize( $input ) {
+	fvarticle_news_save_identity( $input );
+
 	// 설정 저장 시 최근 영상 캐시 비우기 (채널/키 변경 즉시 반영).
 	delete_transient( 'fvarticle_news_yt_videos' );
 
 	return array(
-		'youtube_url'   => esc_url_raw( $input['youtube_url'] ?? '' ),
-		'yt_channel_id' => sanitize_text_field( $input['yt_channel_id'] ?? '' ),
-		'yt_api_key'    => sanitize_text_field( $input['yt_api_key'] ?? '' ),
-		'instagram_url' => esc_url_raw( $input['instagram_url'] ?? '' ),
-		'x_url'         => esc_url_raw( $input['x_url'] ?? '' ),
-		'tiktok_url'    => esc_url_raw( $input['tiktok_url'] ?? '' ),
-		'contact_email' => sanitize_email( $input['contact_email'] ?? '' ),
+		'youtube_url'    => esc_url_raw( $input['youtube_url'] ?? '' ),
+		'yt_channel_id'  => sanitize_text_field( $input['yt_channel_id'] ?? '' ),
+		'yt_api_key'     => sanitize_text_field( $input['yt_api_key'] ?? '' ),
+		'instagram_url'  => esc_url_raw( $input['instagram_url'] ?? '' ),
+		'x_url'          => esc_url_raw( $input['x_url'] ?? '' ),
+		'tiktok_url'     => esc_url_raw( $input['tiktok_url'] ?? '' ),
+		'facebook_url'   => esc_url_raw( $input['facebook_url'] ?? '' ),
+		'threads_url'    => esc_url_raw( $input['threads_url'] ?? '' ),
+		'naver_blog_url' => esc_url_raw( $input['naver_blog_url'] ?? '' ),
+		'naver_cafe_url' => esc_url_raw( $input['naver_cafe_url'] ?? '' ),
+		'kakao_url'      => esc_url_raw( $input['kakao_url'] ?? '' ),
+		'band_url'       => esc_url_raw( $input['band_url'] ?? '' ),
+		'contact_email'  => sanitize_email( $input['contact_email'] ?? '' ),
 		// 헤더 스크립트는 GA/애드센스 코드 원문이 필요하므로 unfiltered_html 권한자에 한해 그대로 저장.
-		'head_scripts'  => current_user_can( 'unfiltered_html' ) ? trim( (string) ( $input['head_scripts'] ?? '' ) ) : fvarticle_news_channel_option( 'head_scripts' ),
+		'head_scripts'   => current_user_can( 'unfiltered_html' ) ? trim( (string) ( $input['head_scripts'] ?? '' ) ) : fvarticle_news_channel_option( 'head_scripts' ),
 	);
 }
 
@@ -308,25 +316,115 @@ function fvarticle_news_output_head_scripts() {
 }
 add_action( 'wp_head', 'fvarticle_news_output_head_scripts', 20 );
 
+// 채널 정보(이름·소개·프로필 이미지·파비콘)는 WP 기본 저장 위치를 그대로 쓴다 — 사용자 정의하기·설정 > 일반과 같은 값.
+// 채널 설정 폼에서 온 값만 처리한다(isset). 다른 곳에서 채널 옵션을 저장할 때 지워지지 않게.
+function fvarticle_news_save_identity( $input ) {
+	if ( isset( $input['blogname'] ) ) {
+		update_option( 'blogname', $input['blogname'] );
+	}
+	if ( isset( $input['blogdescription'] ) ) {
+		update_option( 'blogdescription', $input['blogdescription'] );
+	}
+	foreach ( array( 'custom_logo', 'site_icon' ) as $key ) {
+		if ( ! isset( $input[ $key ] ) ) {
+			continue;
+		}
+		$attachment_id = absint( $input[ $key ] );
+		if ( $attachment_id && ! wp_attachment_is_image( $attachment_id ) ) {
+			continue;
+		}
+		if ( 'custom_logo' === $key ) {
+			set_theme_mod( 'custom_logo', $attachment_id );
+		} else {
+			update_option( 'site_icon', $attachment_id );
+		}
+	}
+}
+
+function fvarticle_news_image_field( $key, $attachment_id ) {
+	$src = $attachment_id ? wp_get_attachment_image_url( $attachment_id, 'medium' ) : '';
+	?>
+	<div class="fv-image-field">
+		<input type="hidden" name="sample01_channel_options[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $src ? $attachment_id : '' ); ?>">
+		<img class="fv-image-preview" src="<?php echo esc_url( $src ); ?>" alt="" style="width:64px;height:64px;object-fit:contain;border:1px solid #dcdcde;border-radius:4px;background:#fff;vertical-align:middle;margin-right:8px"<?php echo $src ? '' : ' hidden'; ?>>
+		<button type="button" class="button fv-image-select">이미지 선택</button>
+		<button type="button" class="button-link button-link-delete fv-image-remove" style="margin-left:8px"<?php echo $src ? '' : ' hidden'; ?>>제거</button>
+	</div>
+	<?php
+}
+
+function fvarticle_news_channel_settings_enqueue( $hook ) {
+	if ( 'toplevel_page_fv-article-news-channel' !== $hook ) {
+		return;
+	}
+	wp_enqueue_media();
+	wp_enqueue_script(
+		'fv-article-news-channel-settings',
+		get_theme_file_uri( 'assets/channel-settings.js' ),
+		array( 'jquery' ),
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
+}
+add_action( 'admin_enqueue_scripts', 'fvarticle_news_channel_settings_enqueue' );
+
 function fvarticle_news_channel_settings_page() {
 	$fields = array(
-		'youtube_url'   => array( '유튜브 채널 URL', '구독하기 버튼과 헤더 "유튜브 바로가기"에 사용됩니다.' ),
-		'yt_channel_id' => array( '유튜브 채널 ID', '"최근 업로드 영상" 위젯에 사용됩니다. UC로 시작하는 ID (유튜브 채널 > 정보 > 공유에서 확인).' ),
-		'yt_api_key'    => array( 'YouTube API 키 (선택)', '비워두면 채널 RSS로 최근 영상을 가져옵니다(권장 기본값). RSS가 안 되는 환경에서만 YouTube Data API v3 키를 발급해 입력하세요.' ),
-		'instagram_url' => array( '인스타그램 URL', '비워두면 버튼이 표시되지 않습니다.' ),
-		'x_url'         => array( 'X(트위터) URL', '비워두면 버튼이 표시되지 않습니다.' ),
-		'tiktok_url'    => array( '틱톡 URL', '비워두면 버튼이 표시되지 않습니다.' ),
-		'contact_email' => array( '문의 이메일', '헤더 "문의하기"와 메일 문의 버튼에 사용됩니다.' ),
-		'head_scripts'  => array( '헤더 스크립트', '모든 페이지의 <head>에 그대로 출력됩니다. Google 애널리틱스, 애드센스 코드 등을 <script> 태그째 붙여넣으세요.' ),
+		'youtube_url'    => array( '유튜브 채널 URL', '구독하기 버튼과 헤더 "유튜브 바로가기"에 사용됩니다.' ),
+		'yt_channel_id'  => array( '유튜브 채널 ID', '"최근 업로드 영상" 위젯에 사용됩니다. UC로 시작하는 ID (유튜브 채널 > 정보 > 공유에서 확인).' ),
+		'yt_api_key'     => array( 'YouTube API 키 (선택)', '비워두면 채널 RSS로 최근 영상을 가져옵니다(권장 기본값). RSS가 안 되는 환경에서만 YouTube Data API v3 키를 발급해 입력하세요.' ),
+		'instagram_url'  => array( '인스타그램 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'x_url'          => array( 'X(트위터) URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'tiktok_url'     => array( '틱톡 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'facebook_url'   => array( '페이스북 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'threads_url'    => array( '스레드 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'naver_blog_url' => array( '네이버 블로그 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'naver_cafe_url' => array( '네이버 카페 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'kakao_url'      => array( '카카오톡 채널 URL', 'pf.kakao.com 주소. 비워두면 버튼이 표시되지 않습니다.' ),
+		'band_url'       => array( '네이버 밴드 URL', '비워두면 버튼이 표시되지 않습니다.' ),
+		'contact_email'  => array( '문의 이메일', '헤더 "문의하기"와 메일 문의 버튼에 사용됩니다.' ),
+		'head_scripts'   => array( '헤더 스크립트', '모든 페이지의 <head>에 그대로 출력됩니다. Google 애널리틱스, 애드센스 코드 등을 <script> 태그째 붙여넣으세요.' ),
 	);
 	?>
 	<div class="wrap">
 		<h1>채널 설정</h1>
 		<p>제휴 채널에 맞게 이곳 값만 바꾸면 사이트 전체에 반영됩니다.<br>
-		채널명·소개문은 <a href="<?php echo esc_url( admin_url( 'options-general.php' ) ); ?>">설정 &gt; 일반</a>(사이트 제목·태그라인),
-		프로필 아바타는 <a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>">사용자 정의하기</a>(로고)에서 변경합니다.</p>
+		채널 정보는 워드프레스 기본 설정(사이트 제목·태그라인·로고·사이트 아이콘)과 같은 값이라, 사용자 정의하기에서 바꿔도 여기에 그대로 보입니다.</p>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'fvarticle_news_channel' ); ?>
+			<h2>채널 정보</h2>
+			<table class="form-table" role="presentation">
+				<tr>
+					<th scope="row"><label for="fv-article-news-blogname">채널 이름</label></th>
+					<td>
+						<input type="text" class="regular-text" id="fv-article-news-blogname" name="sample01_channel_options[blogname]" value="<?php echo esc_attr( get_option( 'blogname' ) ); ?>">
+						<p class="description">사이트 제목입니다. 헤더·프로필·브라우저 탭·피드 제목에 쓰입니다.</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="fv-article-news-blogdescription">채널 소개</label></th>
+					<td>
+						<textarea class="large-text" rows="3" id="fv-article-news-blogdescription" name="sample01_channel_options[blogdescription]"><?php echo esc_html( get_option( 'blogdescription' ) ); // 저장값이 이미 엔티티 처리돼 있어 esc_textarea는 &#039; 를 이중 변환한다 ?></textarea>
+						<p class="description">태그라인입니다. 홈 프로필 소개문과 피드 설명에 쓰입니다.</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">프로필 이미지</th>
+					<td>
+						<?php fvarticle_news_image_field( 'custom_logo', (int) get_theme_mod( 'custom_logo' ) ); ?>
+						<p class="description">로고입니다. 홈 프로필 아바타 등에 쓰입니다. 비우면 채널 이름 첫 글자가 보입니다.</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">파비콘</th>
+					<td>
+						<?php fvarticle_news_image_field( 'site_icon', (int) get_option( 'site_icon' ) ); ?>
+						<p class="description">사이트 아이콘입니다. 브라우저 탭·북마크에 보입니다. 512×512px 이상 정사각형 이미지를 권장합니다.</p>
+					</td>
+				</tr>
+			</table>
+
+			<h2>링크·연동</h2>
 			<table class="form-table" role="presentation">
 				<?php foreach ( $fields as $key => $label ) : ?>
 					<tr>
