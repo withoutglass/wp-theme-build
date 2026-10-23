@@ -60,7 +60,7 @@ $title_tag = ( is_singular( 'post' ) && get_queried_object_id() === get_the_ID()
 		</div>
 
 		<aside class="reader-rail" aria-label="<?php esc_attr_e( '광고', 'fv-article-stream' ); ?>">
-			<div class="ad-slot ad-slot-rail"><span><?php esc_html_e( 'AD — 160×600', 'fv-article-stream' ); ?></span></div>
+			<div class="ad-slot ad-slot-rail"></div>
 		</aside>
 	</div>
 </article>

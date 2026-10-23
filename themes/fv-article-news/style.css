@@ -3,7 +3,7 @@ Theme Name: FV Article News
 Theme URI: https://github.com/withoutglass/wp-theme-build
 Author: withoutglass
 Description: 유튜브→article 서비스용 뉴스형 테마. MSN 피드 공급 + 광고 수익형 사이트.
-Version: 0.5.1
+Version: 0.6.0
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
@@ -712,6 +712,11 @@ body.single .site-sidebar {
 .btn-mail { background: #64748b; }
 
 .btn-threads { background: #000; }
+
+/* 검정 계열 버튼은 다크 모드 배경에 묻혀 옅은 테두리 (inset이라 버튼 크기는 그대로) */
+.btn-x,
+.btn-tiktok,
+.btn-threads { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3); }
 
 .btn-facebook { background: #1877f2; }
 

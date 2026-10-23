@@ -748,5 +748,605 @@
    "accent-on-chrome": "#669de1",
    "line": "#404040"
   }
+ },
+ {
+  "key": "sky-light",
+  "label": "페일 스카이 — 연하늘 틀 + 블루",
+  "colors": {
+   "bg": "#f2f6fb",
+   "surface": "#ffffff",
+   "chrome": "#dfeafa",
+   "text": "#18202c",
+   "muted": "#657081",
+   "accent": "#1a5fd0",
+   "on-accent": "#ffffff",
+   "on-chrome": "#111c2c",
+   "chrome-muted": "#4d6180",
+   "accent-on-chrome": "#1a56c4",
+   "line": "#e0e6ee"
+  },
+  "dark": {
+   "bg": "#131820",
+   "surface": "#222a35",
+   "chrome": "#090d13",
+   "text": "#e5e7eb",
+   "muted": "#929caa",
+   "accent": "#6695eb",
+   "on-accent": "#090d13",
+   "on-chrome": "#e7eaee",
+   "chrome-muted": "#909bad",
+   "accent-on-chrome": "#6695eb",
+   "line": "#343e4b"
+  }
+ },
+ {
+  "key": "mint-light",
+  "label": "민트 라이트 — 연민트 틀 + 그린",
+  "colors": {
+   "bg": "#f1f8f4",
+   "surface": "#ffffff",
+   "chrome": "#dcf2e7",
+   "text": "#15241d",
+   "muted": "#5b7468",
+   "accent": "#0a7a4a",
+   "on-accent": "#ffffff",
+   "on-chrome": "#112c1f",
+   "chrome-muted": "#437059",
+   "accent-on-chrome": "#0a6e43",
+   "line": "#ddede4"
+  },
+  "dark": {
+   "bg": "#13201a",
+   "surface": "#22352b",
+   "chrome": "#09130e",
+   "text": "#e5ebe8",
+   "muted": "#92aa9e",
+   "accent": "#44eea5",
+   "on-accent": "#09130e",
+   "on-chrome": "#e7eeeb",
+   "chrome-muted": "#90ad9e",
+   "accent-on-chrome": "#4defa9",
+   "line": "#344b40"
+  }
+ },
+ {
+  "key": "blush-light",
+  "label": "블러시 — 연분홍 틀 + 로즈",
+  "colors": {
+   "bg": "#fbf3f5",
+   "surface": "#ffffff",
+   "chrome": "#fae1e7",
+   "text": "#2a1a1f",
+   "muted": "#81656e",
+   "accent": "#c2185b",
+   "on-accent": "#ffffff",
+   "on-chrome": "#2c1117",
+   "chrome-muted": "#804d59",
+   "accent-on-chrome": "#b0164f",
+   "line": "#efe1e4"
+  },
+  "dark": {
+   "bg": "#201316",
+   "surface": "#352226",
+   "chrome": "#13090b",
+   "text": "#ebe5e6",
+   "muted": "#aa9298",
+   "accent": "#ec6597",
+   "on-accent": "#13090b",
+   "on-chrome": "#eee7e9",
+   "chrome-muted": "#ad9097",
+   "accent-on-chrome": "#ec699a",
+   "line": "#4b343a"
+  }
+ },
+ {
+  "key": "butter-light",
+  "label": "버터 — 연노랑 틀 + 오렌지",
+  "colors": {
+   "bg": "#fbf8ee",
+   "surface": "#ffffff",
+   "chrome": "#faefc8",
+   "text": "#29231a",
+   "muted": "#7a6f5f",
+   "accent": "#b04a00",
+   "on-accent": "#ffffff",
+   "on-chrome": "#2c2611",
+   "chrome-muted": "#736845",
+   "accent-on-chrome": "#9a4100",
+   "line": "#ede9dd"
+  },
+  "dark": {
+   "bg": "#201d13",
+   "surface": "#353122",
+   "chrome": "#131109",
+   "text": "#ebeae5",
+   "muted": "#aaa592",
+   "accent": "#ff8933",
+   "on-accent": "#131109",
+   "on-chrome": "#eeede7",
+   "chrome-muted": "#ada690",
+   "accent-on-chrome": "#ff8f3d",
+   "line": "#4b4634"
+  }
+ },
+ {
+  "key": "lilac-light",
+  "label": "라일락 — 연보라 틀 + 퍼플",
+  "colors": {
+   "bg": "#f6f3fc",
+   "surface": "#ffffff",
+   "chrome": "#ebe3fb",
+   "text": "#1f1a2e",
+   "muted": "#6c6581",
+   "accent": "#6b3fd4",
+   "on-accent": "#ffffff",
+   "on-chrome": "#1a112c",
+   "chrome-muted": "#5e4d80",
+   "accent-on-chrome": "#5f35c2",
+   "line": "#e6e1ef"
+  },
+  "dark": {
+   "bg": "#171320",
+   "surface": "#282235",
+   "chrome": "#0c0913",
+   "text": "#e7e5eb",
+   "muted": "#9a92aa",
+   "accent": "#9e83dd",
+   "on-accent": "#0c0913",
+   "on-chrome": "#e9e7ee",
+   "chrome-muted": "#9990ad",
+   "accent-on-chrome": "#a187de",
+   "line": "#3c344b"
+  }
+ },
+ {
+  "key": "signal-blue",
+  "label": "시그널 블루 — 파랑 틀 + 노랑",
+  "colors": {
+   "bg": "#eef3fa",
+   "surface": "#ffffff",
+   "chrome": "#0b4fb3",
+   "text": "#151b26",
+   "muted": "#646e80",
+   "accent": "#0b4fb3",
+   "on-accent": "#ffffff",
+   "on-chrome": "#ffffff",
+   "chrome-muted": "#cfd9e8",
+   "accent-on-chrome": "#ffd84d",
+   "line": "#dde3ed"
+  },
+  "dark": {
+   "bg": "#131820",
+   "surface": "#222a35",
+   "chrome": "#090d13",
+   "text": "#e5e7eb",
+   "muted": "#929caa",
+   "accent": "#ffd233",
+   "on-accent": "#090d13",
+   "on-chrome": "#e7eaee",
+   "chrome-muted": "#909bad",
+   "accent-on-chrome": "#ffd53d",
+   "line": "#343e4b"
+  }
+ },
+ {
+  "key": "signal-red",
+  "label": "시그널 레드 — 빨강 틀 + 크림",
+  "colors": {
+   "bg": "#f9f1f1",
+   "surface": "#ffffff",
+   "chrome": "#c4151c",
+   "text": "#241818",
+   "muted": "#816565",
+   "accent": "#c4151c",
+   "on-accent": "#ffffff",
+   "on-chrome": "#ffffff",
+   "chrome-muted": "#f1e2e3",
+   "accent-on-chrome": "#ffe7a3",
+   "line": "#eddede"
+  },
+  "dark": {
+   "bg": "#201314",
+   "surface": "#352223",
+   "chrome": "#13090a",
+   "text": "#ebe5e5",
+   "muted": "#aa9293",
+   "accent": "#ffca33",
+   "on-accent": "#13090a",
+   "on-chrome": "#eee7e7",
+   "chrome-muted": "#ad9091",
+   "accent-on-chrome": "#ffcc3d",
+   "line": "#4b3435"
+  }
+ },
+ {
+  "key": "kelly",
+  "label": "켈리 그린 — 초록 틀 + 라임",
+  "colors": {
+   "bg": "#eff7f2",
+   "surface": "#ffffff",
+   "chrome": "#0a6e38",
+   "text": "#16221b",
+   "muted": "#5b7465",
+   "accent": "#0a7a3e",
+   "on-accent": "#ffffff",
+   "on-chrome": "#ffffff",
+   "chrome-muted": "#cfe8da",
+   "accent-on-chrome": "#dcff70",
+   "line": "#dcece2"
+  },
+  "dark": {
+   "bg": "#132019",
+   "surface": "#22352b",
+   "chrome": "#09130e",
+   "text": "#e5ebe8",
+   "muted": "#92aa9d",
+   "accent": "#cdff33",
+   "on-accent": "#09130e",
+   "on-chrome": "#e7eeea",
+   "chrome-muted": "#90ad9d",
+   "accent-on-chrome": "#d0ff3d",
+   "line": "#344b3f"
+  }
+ },
+ {
+  "key": "royal",
+  "label": "로열 퍼플 — 보라 틀 + 앰버",
+  "colors": {
+   "bg": "#f4f1fa",
+   "surface": "#ffffff",
+   "chrome": "#5a2ab0",
+   "text": "#1d1828",
+   "muted": "#6e6581",
+   "accent": "#5a2ab0",
+   "on-accent": "#ffffff",
+   "on-chrome": "#ffffff",
+   "chrome-muted": "#d8cfe8",
+   "accent-on-chrome": "#ffc94d",
+   "line": "#e4dfee"
+  },
+  "dark": {
+   "bg": "#181320",
+   "surface": "#292235",
+   "chrome": "#0d0913",
+   "text": "#e7e5eb",
+   "muted": "#9b92aa",
+   "accent": "#ffc133",
+   "on-accent": "#0d0913",
+   "on-chrome": "#eae7ee",
+   "chrome-muted": "#9a90ad",
+   "accent-on-chrome": "#ffc43d",
+   "line": "#3c344b"
+  }
+ },
+ {
+  "key": "teal-pop",
+  "label": "틸 팝 — 청록 틀 + 피치",
+  "colors": {
+   "bg": "#eef7f6",
+   "surface": "#ffffff",
+   "chrome": "#00665a",
+   "text": "#152220",
+   "muted": "#5b7470",
+   "accent": "#00796b",
+   "on-accent": "#ffffff",
+   "on-chrome": "#ffffff",
+   "chrome-muted": "#cfe8e5",
+   "accent-on-chrome": "#ffe1cf",
+   "line": "#dbecea"
+  },
+  "dark": {
+   "bg": "#13201e",
+   "surface": "#223533",
+   "chrome": "#091312",
+   "text": "#e5ebeb",
+   "muted": "#92aaa7",
+   "accent": "#ff7f33",
+   "on-accent": "#091312",
+   "on-chrome": "#e7eeed",
+   "chrome-muted": "#90ada9",
+   "accent-on-chrome": "#ff863d",
+   "line": "#344b49"
+  }
+ },
+ {
+  "key": "vivid-blue",
+  "label": "비비드 블루 — 먹색 + 쨍한 파랑",
+  "colors": {
+   "bg": "#f4f5f7",
+   "surface": "#ffffff",
+   "chrome": "#15171c",
+   "text": "#16181d",
+   "muted": "#656d81",
+   "accent": "#0050ff",
+   "on-accent": "#ffffff",
+   "on-chrome": "#eeeff2",
+   "chrome-muted": "#a8aebd",
+   "accent-on-chrome": "#5c9dff",
+   "line": "#e2e5ea"
+  },
+  "dark": {
+   "bg": "#16181d",
+   "surface": "#252932",
+   "chrome": "#0c0d10",
+   "text": "#e5e7eb",
+   "muted": "#9299aa",
+   "accent": "#4d94ff",
+   "on-accent": "#0c0d10",
+   "on-chrome": "#e8e9ee",
+   "chrome-muted": "#9098ac",
+   "accent-on-chrome": "#5297ff",
+   "line": "#373c49"
+  }
+ },
+ {
+  "key": "hot-pink",
+  "label": "핫 핑크 — 먹색 + 핫핑크",
+  "colors": {
+   "bg": "#f6f4f6",
+   "surface": "#ffffff",
+   "chrome": "#1a161a",
+   "text": "#1c171c",
+   "muted": "#7e677e",
+   "accent": "#d4006a",
+   "on-accent": "#ffffff",
+   "on-chrome": "#f1eef1",
+   "chrome-muted": "#b9acb9",
+   "accent-on-chrome": "#ff5fa8",
+   "line": "#e8e3e8"
+  },
+  "dark": {
+   "bg": "#1c171c",
+   "surface": "#2f282f",
+   "chrome": "#0f0d0f",
+   "text": "#eae6ea",
+   "muted": "#a696a6",
+   "accent": "#ff57a3",
+   "on-accent": "#0f0d0f",
+   "on-chrome": "#ece9ec",
+   "chrome-muted": "#a696a6",
+   "accent-on-chrome": "#ff57a3",
+   "line": "#453a45"
+  }
+ },
+ {
+  "key": "vivid-orange",
+  "label": "비비드 오렌지 — 먹색 + 주황",
+  "colors": {
+   "bg": "#f7f5f3",
+   "surface": "#ffffff",
+   "chrome": "#1a1714",
+   "text": "#1d1a17",
+   "muted": "#796d60",
+   "accent": "#c74100",
+   "on-accent": "#ffffff",
+   "on-chrome": "#f2f0ee",
+   "chrome-muted": "#bcb2a9",
+   "accent-on-chrome": "#ff8a3d",
+   "line": "#ebe6e1"
+  },
+  "dark": {
+   "bg": "#1d1a16",
+   "surface": "#312b26",
+   "chrome": "#100e0c",
+   "text": "#ebe8e5",
+   "muted": "#aa9e92",
+   "accent": "#ff8433",
+   "on-accent": "#100e0c",
+   "on-chrome": "#edebe8",
+   "chrome-muted": "#ab9e91",
+   "accent-on-chrome": "#ff8a3d",
+   "line": "#484037"
+  }
+ },
+ {
+  "key": "vivid-green",
+  "label": "비비드 그린 — 먹색 + 형광 초록",
+  "colors": {
+   "bg": "#f3f6f4",
+   "surface": "#ffffff",
+   "chrome": "#141a16",
+   "text": "#161c18",
+   "muted": "#5b7463",
+   "accent": "#00803a",
+   "on-accent": "#ffffff",
+   "on-chrome": "#eef2ef",
+   "chrome-muted": "#a9bcaf",
+   "accent-on-chrome": "#2ee58a",
+   "line": "#e2e9e4"
+  },
+  "dark": {
+   "bg": "#161d18",
+   "surface": "#263129",
+   "chrome": "#0c100d",
+   "text": "#e5ebe7",
+   "muted": "#92aa9a",
+   "accent": "#4ae899",
+   "on-accent": "#0c100d",
+   "on-chrome": "#e8edea",
+   "chrome-muted": "#91ab9a",
+   "accent-on-chrome": "#53ea9f",
+   "line": "#37483d"
+  }
+ },
+ {
+  "key": "ultraviolet",
+  "label": "울트라 바이올렛 — 먹색 + 보라",
+  "colors": {
+   "bg": "#f5f4f8",
+   "surface": "#ffffff",
+   "chrome": "#17151d",
+   "text": "#1a1820",
+   "muted": "#6c6581",
+   "accent": "#6a1bff",
+   "on-accent": "#ffffff",
+   "on-chrome": "#eeedf2",
+   "chrome-muted": "#aca6bf",
+   "accent-on-chrome": "#b38cff",
+   "line": "#e4e1ec"
+  },
+  "dark": {
+   "bg": "#17151e",
+   "surface": "#282432",
+   "chrome": "#0d0c10",
+   "text": "#e6e5eb",
+   "muted": "#9892aa",
+   "accent": "#a77aff",
+   "on-accent": "#0d0c10",
+   "on-chrome": "#e9e7ee",
+   "chrome-muted": "#9790ad",
+   "accent-on-chrome": "#ab80ff",
+   "line": "#3b364a"
+  }
+ },
+ {
+  "key": "newsprint",
+  "label": "뉴스프린트 — 신문지 + 먹색 + 빨강",
+  "colors": {
+   "bg": "#efeadd",
+   "surface": "#fbf8f1",
+   "chrome": "#2a2620",
+   "text": "#26221c",
+   "muted": "#706658",
+   "accent": "#a3271c",
+   "on-accent": "#ffffff",
+   "on-chrome": "#f2f0ee",
+   "chrome-muted": "#bdb5a8",
+   "accent-on-chrome": "#ff9b85",
+   "line": "#e3dccb"
+  },
+  "dark": {
+   "bg": "#1d1a16",
+   "surface": "#312d25",
+   "chrome": "#100e0c",
+   "text": "#ebe9e5",
+   "muted": "#aaa092",
+   "accent": "#ff6947",
+   "on-accent": "#100e0c",
+   "on-chrome": "#edebe8",
+   "chrome-muted": "#aba191",
+   "accent-on-chrome": "#ff6442",
+   "line": "#484137"
+  }
+ },
+ {
+  "key": "ivory-navy",
+  "label": "아이보리 & 네이비 — 상아색 + 감색",
+  "colors": {
+   "bg": "#f3eddf",
+   "surface": "#fffcf5",
+   "chrome": "#1f2f4f",
+   "text": "#1e2433",
+   "muted": "#62697d",
+   "accent": "#1f4f9a",
+   "on-accent": "#ffffff",
+   "on-chrome": "#edeff3",
+   "chrome-muted": "#98aacd",
+   "accent-on-chrome": "#a9c6ff",
+   "line": "#e5decf"
+  },
+  "dark": {
+   "bg": "#131720",
+   "surface": "#222835",
+   "chrome": "#090c13",
+   "text": "#e5e7eb",
+   "muted": "#929aaa",
+   "accent": "#5c93ff",
+   "on-accent": "#090c13",
+   "on-chrome": "#e7e9ee",
+   "chrome-muted": "#9099ad",
+   "accent-on-chrome": "#5c93ff",
+   "line": "#343c4b"
+  }
+ },
+ {
+  "key": "kraft",
+  "label": "크래프트 — 베이지 틀 + 테라코타",
+  "colors": {
+   "bg": "#f1e5cf",
+   "surface": "#fbf5ea",
+   "chrome": "#e6d3ae",
+   "text": "#2e2418",
+   "muted": "#6e6356",
+   "accent": "#ae431c",
+   "on-accent": "#ffffff",
+   "on-chrome": "#2c2311",
+   "chrome-muted": "#63553c",
+   "accent-on-chrome": "#983917",
+   "line": "#dfd5c3"
+  },
+  "dark": {
+   "bg": "#201c13",
+   "surface": "#352e22",
+   "chrome": "#131009",
+   "text": "#ebe9e5",
+   "muted": "#aaa292",
+   "accent": "#e6805b",
+   "on-accent": "#131009",
+   "on-chrome": "#eeece7",
+   "chrome-muted": "#ada390",
+   "accent-on-chrome": "#e67c57",
+   "line": "#4b4334"
+  }
+ },
+ {
+  "key": "linen-green",
+  "label": "리넨 & 보틀그린 — 마직 + 병 초록",
+  "colors": {
+   "bg": "#eeeadf",
+   "surface": "#fbf9f3",
+   "chrome": "#1f3d2f",
+   "text": "#1c241f",
+   "muted": "#566e5f",
+   "accent": "#1f6b4a",
+   "on-accent": "#ffffff",
+   "on-chrome": "#edf3f0",
+   "chrome-muted": "#9acbb4",
+   "accent-on-chrome": "#a5e0bf",
+   "line": "#e3ddcb"
+  },
+  "dark": {
+   "bg": "#13201a",
+   "surface": "#22352c",
+   "chrome": "#09130e",
+   "text": "#e5ebe8",
+   "muted": "#92aa9f",
+   "accent": "#67cb93",
+   "on-accent": "#09130e",
+   "on-chrome": "#e7eeeb",
+   "chrome-muted": "#90ad9f",
+   "accent-on-chrome": "#6fcd98",
+   "line": "#344b41"
+  }
+ },
+ {
+  "key": "parchment",
+  "label": "양피지 & 플럼 — 양피지 틀 + 자두",
+  "colors": {
+   "bg": "#f2e8d8",
+   "surface": "#fcf7ef",
+   "chrome": "#ecdcc2",
+   "text": "#2a1d26",
+   "muted": "#7a5f71",
+   "accent": "#8a2c6e",
+   "on-accent": "#ffffff",
+   "on-chrome": "#2c2211",
+   "chrome-muted": "#6b5b41",
+   "accent-on-chrome": "#7a2560",
+   "line": "#e2d9c9"
+  },
+  "dark": {
+   "bg": "#201b13",
+   "surface": "#352e22",
+   "chrome": "#130f09",
+   "text": "#ebe9e5",
+   "muted": "#aaa192",
+   "accent": "#d87ebc",
+   "on-accent": "#130f09",
+   "on-chrome": "#eeebe7",
+   "chrome-muted": "#ada290",
+   "accent-on-chrome": "#d77aba",
+   "line": "#4b4234"
+  }
  }
 ]

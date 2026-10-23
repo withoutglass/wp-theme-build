@@ -147,7 +147,7 @@ while ( have_posts() ) :
 		</article>
 
 		<aside class="ad-column" aria-label="<?php esc_attr_e( '광고', 'fv-article-rail' ); ?>">
-			<div class="ad-slot ad-slot-sky"><span><?php esc_html_e( 'AD — 160×600', 'fv-article-rail' ); ?></span></div>
+			<div class="ad-slot ad-slot-sky"></div>
 		</aside>
 	</div>
 <?php endwhile; ?>

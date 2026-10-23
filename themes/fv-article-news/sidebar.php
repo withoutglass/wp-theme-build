@@ -39,7 +39,7 @@ $top = new WP_Query(
 		<?php wp_reset_postdata(); ?>
 	<?php endif; ?>
 
-	<div class="ad-slot ad-slot-side"><span><?php esc_html_e( 'AD — 사이드바 하단 (300×250)', 'fv-article-news' ); ?></span></div>
+	<div class="ad-slot ad-slot-side"></div>
 
 	<?php // 최근 업로드 영상은 기사 상세에서만 노출. ?>
 	<?php $recent_videos = is_singular( 'post' ) ? fvarticle_news_recent_videos( 4 ) : array(); ?>

@@ -223,7 +223,7 @@ function fvarticle_rail_incontent_ad( $content ) {
 	if ( false === strpos( $content, '</p>', $pos ) ) {
 		return $content;
 	}
-	$ad = '<div class="ad-slot ad-slot-incontent"><span>' . esc_html__( 'AD — 본문 중간', 'fv-article-rail' ) . '</span></div>';
+	$ad = '<div class="ad-slot ad-slot-incontent"></div>';
 	return substr_replace( $content, $ad, $pos, 0 );
 }
 add_filter( 'the_content', 'fvarticle_rail_incontent_ad', 20 );

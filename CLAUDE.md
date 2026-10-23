@@ -28,9 +28,11 @@
   - REST `GET /wp-json/fv-article-stream/v1/next?after=<ID>` → 서버가 렌더링한 기사 HTML(`template-parts/stream-article.php`) + url/title/next_url. 순서는 (발행 시각, ID) 내림차순 — 일괄 발행으로 같은 초의 글이 많아 get_adjacent_post는 글을 건너뛴다.
   - `assets/stream.js`: 자동 5편 후 "다음 기사 보기" 버튼. 화면 가운데 기사로 URL·탭 제목을 replaceState (GA4 향상된 측정의 "브라우저 기록 이벤트 기반 페이지 변경"이 페이지뷰로 집계). 자동 로딩 트리거는 스크롤 위치 체크 — IntersectionObserver는 End 키 점프 때 놓친다.
   - 본문 중간 광고는 REST 렌더링에서도 들어가야 해서 the_content 필터가 아닌 헬퍼를 템플릿에서 직접 호출. JS가 없으면 "다음 기사 보기"는 일반 링크.
-- fv-article-news·fv-article-news-category·fv-article-reader·fv-article-rail·fv-article-stream은 외모 > 사용자 정의하기 > 색상 팔레트에서 25개 팔레트 중 색 견본 카드로 선택(theme_mod `color_palette`, 기본 = 각 테마 고유색 classic(01·멀티 채널판)/indigo/forest/burgundy).
+- fv-article-news·fv-article-news-category·fv-article-reader·fv-article-rail·fv-article-stream은 외모 > 사용자 정의하기 > 색상 팔레트에서 45개 팔레트 중 색 견본 카드로 선택(theme_mod `color_palette`, 기본 = 각 테마 고유색 classic(01·멀티 채널판)/indigo/forest/burgundy).
   - 01의 `classic`은 기존 흰 바탕 + 블루 그대로이고, 대비 기준 때문에 `--muted`만 #888 → #707070으로 진해졌다. 01은 바탕(body) = `--surface`, 푸터·채널 박스·광고 자리 = `--bg`. 유튜브 빨강·SNS 버튼·영상 검정 등 브랜드 색은 하드코딩 유지.
   - 모드: 사용자 정의하기 > 색상 팔레트 > 모드 = 라이트(기본) / 다크 / OS 설정 따르기 (theme_mod `color_mode`). 팔레트마다 `dark` 값이 있고, 다크·OS 모드면 같은 CSS 변수를 다크 값으로 덮어쓴다(OS는 prefers-color-scheme 미디어 쿼리). 포인트색 위 글자는 `--on-accent` 변수(라이트 흰색, 다크 틀색)로 칠한다.
+  - 26~45번(2026-10-23 추가)은 구조 자체를 바꾼 4종: 밝은 틀(sky-light·mint-light·blush-light·butter-light·lilac-light), 원색 틀(signal-blue·signal-red·kelly·royal·teal-pop), 흰 바탕 + 선명한 포인트(vivid-*·hot-pink·ultraviolet), 종이·크림 바탕(newsprint·ivory-navy·kraft·linen-green·parchment). 기존 25개는 모두 "검정에 가까운 틀 + 탁한 회색 바탕"이라 색 이름만 달랐다. 다크는 자동 생성.
+  - 틀이 밝을 수 있으므로 틀 위 글자는 `--on-chrome`으로 칠할 것(흰색 하드코딩 금지). 02~04 테두리 SNS 버튼도 이 이유로 `--on-chrome`.
   - 새 팔레트에 `dark`를 안 넣으면 빌드 스크립트가 라이트 값의 색 계열로 자동 생성해 palettes.json에 써 넣는다.
   - 원본은 `shared/palettes.json`(데이터)·`shared/palette-control.php`(견본 카드 컨트롤). 고친 뒤 `python3 tools/build-palettes.py` → 대비 검사 후 각 테마 `inc/`로 생성·복사. 테마의 `inc/` 사본은 직접 고치지 않는다.
   - 검사 기준: 테마가 쓰는 글자/배경 조합 9가지(스크립트 PAIRS)가 라이트·다크 모두 4.5:1 이상. 테마에 새 색 조합을 쓰면 PAIRS에도 추가할 것.
@@ -38,7 +40,7 @@
 - `fv-news-portal` = 05 테마. MSN 서비스와 무관한 **순수 범용 뉴스 샘플**(00에서 출발). 포털형: 상단 바(날짜·검색) → 제호 → 포인트색 카테고리 메뉴 바 → 최신 기사 띠, 홈은 헤드라인(대표 1 + 주요 4) + 카테고리 섹션(글 수 순 최상위 카테고리 최대 6개), 사이드바 위젯(비면 인기 뉴스=댓글 수 순·최신 뉴스), 기사에 바이라인·태그·기자 소개·이전/다음·같은 카테고리 관련 기사·댓글. 메뉴 위치 primary/footer(주 메뉴 없으면 카테고리로 대체).
   - 색: 흰 바탕 고정 + 포인트색 8개 프리셋(functions.php `fvnews_portal_accents`, 라이트/다크 쌍) + 모드 라이트/다크/OS. 팔레트 빌드 스크립트(shared/·tools/) 대상이 아니다. 모드는 `<html class="mode-*">`로 style.css가 처리.
 - 01~04 어드민 "채널 설정" 화면 맨 위 "채널 정보" = 채널 이름·소개·프로필 이미지·파비콘. 별도 저장소가 아니라 WP 기본 값(blogname·blogdescription·theme_mod custom_logo·site_icon)을 직접 읽고 쓴다(`*_save_identity`, 이미지 선택 UI `assets/channel-settings.js`). 그래서 사용자 정의하기·설정 > 일반과 항상 같은 값. 카테고리판(fv-article-news-category)에는 넣지 않았다.
-  - SNS 버튼(`template-parts/channel-links.php`, 01~04·카테고리판 공통): 유튜브·인스타·X·틱톡·페이스북·스레드·네이버 블로그·네이버 카페·카카오톡 채널·네이버 밴드 + 메일. 템플릿 맨 위 목록(설정 키 => 클래스·라벨·SVG)을 돌며 URL이 있는 것만 출력. 추가 시 목록 한 줄 + 채널 설정 필드·sanitize + style.css `.btn-*` 브랜드 색. 02~04는 검정 계열(X·틱톡·스레드·메일)을 테두리 버튼으로.
+  - SNS 버튼(`template-parts/channel-links.php`, 01~04·카테고리판 공통): 유튜브·인스타·X·틱톡·페이스북·스레드·네이버 블로그·네이버 카페·카카오톡 채널·네이버 밴드 + 메일. 템플릿 맨 위 목록(설정 키 => 클래스·라벨·SVG)을 돌며 URL이 있는 것만 출력. 추가 시 목록 한 줄 + 채널 설정 필드·sanitize + style.css `.btn-*` 브랜드 색. 02~04는 검정 계열(X·틱톡·스레드·메일)을 테두리 버튼으로. 01·카테고리판은 검정 계열(X·틱톡·스레드)에 옅은 inset 테두리(다크 모드에서 배경에 묻히지 않게).
   - 01·카테고리판 홈 프로필의 SNS 버튼은 오른쪽 칸(최대 45%, 넘치면 줄바꿈) — 예전처럼 absolute로 두면 버튼이 많을 때 채널 이름을 덮는다.
   - 태그라인 textarea는 esc_html로 출력 — WP가 저장 시 이미 엔티티 처리하므로 esc_textarea를 쓰면 &#039;가 이중 변환돼 보인다.
 - `fv-article-news`는 2026-10 `01`에서 이름을 바꿨다. 채널 설정 옵션 키 `sample01_channel_options`는 기존 데이터 유지를 위해 그대로 둔다.
