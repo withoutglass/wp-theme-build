@@ -302,6 +302,7 @@ function fvarticle_news_channel_sanitize( $input ) {
 		'kakao_url'      => esc_url_raw( $input['kakao_url'] ?? '' ),
 		'band_url'       => esc_url_raw( $input['band_url'] ?? '' ),
 		'contact_email'  => sanitize_email( $input['contact_email'] ?? '' ),
+		'footer_logo'    => fvarticle_news_sanitize_image_id( $input['footer_logo'] ?? 0 ),
 		// 헤더 스크립트는 GA/애드센스 코드 원문이 필요하므로 unfiltered_html 권한자에 한해 그대로 저장.
 		'head_scripts'   => current_user_can( 'unfiltered_html' ) ? trim( (string) ( $input['head_scripts'] ?? '' ) ) : fvarticle_news_channel_option( 'head_scripts' ),
 	);
@@ -339,6 +340,11 @@ function fvarticle_news_save_identity( $input ) {
 			update_option( 'site_icon', $attachment_id );
 		}
 	}
+}
+
+function fvarticle_news_sanitize_image_id( $value ) {
+	$attachment_id = absint( $value );
+	return $attachment_id && wp_attachment_is_image( $attachment_id ) ? $attachment_id : 0;
 }
 
 function fvarticle_news_image_field( $key, $attachment_id ) {
@@ -420,6 +426,13 @@ function fvarticle_news_channel_settings_page() {
 					<td>
 						<?php fvarticle_news_image_field( 'site_icon', (int) get_option( 'site_icon' ) ); ?>
 						<p class="description">사이트 아이콘입니다. 브라우저 탭·북마크에 보입니다. 512×512px 이상 정사각형 이미지를 권장합니다.</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">푸터 로고</th>
+					<td>
+						<?php fvarticle_news_image_field( 'footer_logo', (int) fvarticle_news_channel_option( 'footer_logo' ) ); ?>
+						<p class="description">사이트 맨 아래 로고 자리에 보입니다. 비우면 프로필 이미지(로고)가, 그것도 없으면 채널 이름이 보입니다. 높이 40px로 표시됩니다.</p>
 					</td>
 				</tr>
 			</table>

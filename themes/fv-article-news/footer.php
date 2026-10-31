@@ -9,7 +9,10 @@
 <footer class="site-footer">
 	<div class="footer-inner">
 		<div class="footer-logo">
-			<?php if ( has_custom_logo() ) : ?>
+			<?php $footer_logo = (int) fvarticle_news_channel_option( 'footer_logo' ); ?>
+			<?php if ( $footer_logo && wp_attachment_is_image( $footer_logo ) ) : ?>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="custom-logo-link" rel="home"><?php echo wp_get_attachment_image( $footer_logo, 'medium', false, array( 'alt' => get_bloginfo( 'name' ) ) ); ?></a>
+			<?php elseif ( has_custom_logo() ) : ?>
 				<?php the_custom_logo(); ?>
 			<?php else : ?>
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="footer-logo-text"><?php bloginfo( 'name' ); ?></a>
