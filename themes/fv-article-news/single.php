@@ -1,7 +1,7 @@
 <?php
 /**
- * Single post template: title/meta → ad → body(+mid ads) → channel box → related → comments.
- * 오른쪽 사이드바(실시간 TOP) 동반. 광고는 .ad-slot 플레이스홀더.
+ * Single post template: title/meta → body → video → channel box → related, 아래에 하단 피드(타불라) 자리.
+ * 오른쪽 사이드바(실시간 TOP) 동반. 광고 자리(.ad-slot-side, .ad-slot-feed)는 모양 없는 빈 div — 광고 코드가 채운다.
  *
  * @package fv-article-news
  */
@@ -109,6 +109,9 @@ while ( have_posts() ) :
 		</article>
 
 		<?php get_sidebar(); ?>
+
+		<?php // 하단 타불라 피드 자리. PC는 본문 아래 왼쪽 칸(사이드바가 옆으로 이어짐), 모바일은 사이드바 다음. ?>
+		<div class="ad-slot-feed"></div>
 	</div>
 <?php endwhile; ?>
 

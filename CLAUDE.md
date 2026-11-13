@@ -29,7 +29,7 @@
   - `assets/stream.js`: 자동 5편 후 "다음 기사 보기" 버튼. 화면 가운데 기사로 URL·탭 제목을 replaceState (GA4 향상된 측정의 "브라우저 기록 이벤트 기반 페이지 변경"이 페이지뷰로 집계). 자동 로딩 트리거는 스크롤 위치 체크 — IntersectionObserver는 End 키 점프 때 놓친다.
   - 본문 중간 광고는 REST 렌더링에서도 들어가야 해서 the_content 필터가 아닌 헬퍼를 템플릿에서 직접 호출. JS가 없으면 "다음 기사 보기"는 일반 링크.
 - fv-article-news·fv-article-news-category·fv-article-reader·fv-article-rail·fv-article-stream은 외모 > 사용자 정의하기 > 색상 팔레트에서 45개 팔레트 중 색 견본 카드로 선택(theme_mod `color_palette`, 기본 = 각 테마 고유색 classic(01·멀티 채널판)/indigo/forest/burgundy).
-  - 01의 `classic`은 기존 흰 바탕 + 블루 그대로이고, 대비 기준 때문에 `--muted`만 #888 → #707070으로 진해졌다. 01은 바탕(body) = `--surface`, 푸터·채널 박스·광고 자리 = `--bg`. 유튜브 빨강·SNS 버튼·영상 검정 등 브랜드 색은 하드코딩 유지.
+  - 01의 `classic`은 기존 흰 바탕 + 블루 그대로이고, 대비 기준 때문에 `--muted`만 #888 → #707070으로 진해졌다. 01은 바탕(body) = `--surface`, 푸터·채널 박스 = `--bg`. 광고 자리(사이드바 `.ad-slot-side`, 기사 하단 타불라 `.ad-slot-feed`)는 0.6.2부터 모양 없는 빈 div(비면 숨김) — 라이브는 Advanced Ads가 채운다. 유튜브 빨강·SNS 버튼·영상 검정 등 브랜드 색은 하드코딩 유지.
   - 모드: 사용자 정의하기 > 색상 팔레트 > 모드 = 라이트(기본) / 다크 / OS 설정 따르기 (theme_mod `color_mode`). 팔레트마다 `dark` 값이 있고, 다크·OS 모드면 같은 CSS 변수를 다크 값으로 덮어쓴다(OS는 prefers-color-scheme 미디어 쿼리). 포인트색 위 글자는 `--on-accent` 변수(라이트 흰색, 다크 틀색)로 칠한다.
   - 26~45번(2026-10-23 추가)은 구조 자체를 바꾼 4종: 밝은 틀(sky-light·mint-light·blush-light·butter-light·lilac-light), 원색 틀(signal-blue·signal-red·kelly·royal·teal-pop), 흰 바탕 + 선명한 포인트(vivid-*·hot-pink·ultraviolet), 종이·크림 바탕(newsprint·ivory-navy·kraft·linen-green·parchment). 기존 25개는 모두 "검정에 가까운 틀 + 탁한 회색 바탕"이라 색 이름만 달랐다. 다크는 자동 생성.
   - 틀이 밝을 수 있으므로 틀 위 글자는 `--on-chrome`으로 칠할 것(흰색 하드코딩 금지). 02~04 테두리 SNS 버튼도 이 이유로 `--on-chrome`.
