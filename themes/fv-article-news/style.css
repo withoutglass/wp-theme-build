@@ -3,7 +3,7 @@ Theme Name: FV Article News
 Theme URI: https://github.com/withoutglass/wp-theme-build
 Author: withoutglass
 Description: 유튜브→article 서비스용 뉴스형 테마. MSN 피드 공급 + 광고 수익형 사이트.
-Version: 0.6.2
+Version: 0.6.3
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
@@ -427,6 +427,35 @@ body.single .site-sidebar {
   grid-row: 2;
   min-width: 0;
   margin-top: 2.5rem;
+}
+
+/* 좌우 사이드 레일(160×600, 기사 상세·홈) — 모양 없음, 광고 코드가 .ad-rail-slot을 채운다.
+   레일은 .site-content 바깥(패딩 1.5rem = 콘텐츠와의 간격)에 콘텐츠 높이만큼 깔리고, 안의 슬롯이 sticky로 스크롤을 따라온다(사이드바와 같은 top).
+   콘텐츠(1032px) + 양쪽 레일(160 + 간격 24) = 1400px가 들어가야 하므로 그보다 좁으면 숨긴다(스크롤바 여유 포함 1416px). */
+.ad-rail {
+  display: none;
+}
+
+@media (min-width: 1416px) {
+  .site-content {
+    position: relative;
+  }
+
+  .site-content > .ad-rail {
+    display: block;
+    position: absolute;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 160px;
+  }
+
+  .ad-rail-left { right: 100%; }
+  .ad-rail-right { left: 100%; }
+
+  .ad-rail-slot {
+    position: sticky;
+    top: 1.5rem;
+  }
 }
 
 .ad-slot-feed:empty {

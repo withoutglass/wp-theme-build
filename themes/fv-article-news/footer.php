@@ -5,6 +5,11 @@
  * @package fv-article-news
  */
 ?>
+<?php if ( is_single() || is_front_page() ) : ?>
+	<?php // 좌우 사이드 레일(160×600) 자리 — 기사 상세·홈. 넓은 화면(≥1416px)에서만 콘텐츠 바깥에 보이고 스크롤을 따라온다. 광고 코드는 .ad-rail-slot을 채운다. ?>
+	<div class="ad-rail ad-rail-left"><div class="ad-rail-slot"></div></div>
+	<div class="ad-rail ad-rail-right"><div class="ad-rail-slot"></div></div>
+<?php endif; ?>
 </main>
 <footer class="site-footer">
 	<div class="footer-inner">
